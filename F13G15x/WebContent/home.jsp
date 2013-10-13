@@ -16,9 +16,9 @@
 		<br />
 		<hr />
 		<center><a title="Uplaod Data" href="faces/upload.jsp">Upload Data Sheet</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Data Analysis" href="faces/analysis.jsp">Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-		<a title="View Report" href="faces/report.jsp">View Report</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Student Rooster" href="faces/rooster.jsp">Rooster</a>
-		&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Download Data" href="faces/download.jsp">Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Edit Document" href="faces/edit.jsp">Edit Document</a>
-		&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Assignment" href="faces/assigment.jsp">Assignment</a></center>
+		<a title="View Report" href="faces/report.jsp">View Report</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Student Rooster" href="faces/roster.jsp">Roster</a>
+		&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Download Data" href="faces/download.jsp">Download Data</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Edit Document" href="faces/edit.jsp">Edit Document</a>
+		&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Assignment" href="faces/assignment.jsp">Assignment</a></center>
 		<br/>
 	</f:verbatim>
 </f:view>
