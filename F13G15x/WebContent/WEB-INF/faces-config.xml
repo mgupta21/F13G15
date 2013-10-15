@@ -5,19 +5,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
     version="2.1">
-    
     <managed-bean>
-		<managed-bean-name>loginService</managed-bean-name>
-		<managed-bean-class>org.java.app.service.LoginService</managed-bean-class>
+		<managed-bean-name>bmiBean</managed-bean-name>
+		<managed-bean-class>org.uce.model.BmiBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
-	<managed-bean>
-		<managed-bean-name>login</managed-bean-name>
-		<managed-bean-class>org.java.app.model.login</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-	
     <navigation-rule>
 		<display-name>login</display-name>
 		<from-view-id>/login.jsp</from-view-id>
@@ -32,6 +24,9 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-    
-
+    <validator>
+    	<display-name>org.java.app.validator.LoginValidator</display-name>
+    	<validator-id>org.java.app.validator.LoginValidator</validator-id>
+    	<validator-class>org.java.app.validator.LoginValidator</validator-class>
+    </validator>
 </faces-config>

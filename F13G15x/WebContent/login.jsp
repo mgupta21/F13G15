@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Login</title>
 </head>
 <body>
 <f:view>
@@ -18,16 +18,18 @@
 		<br />
 		<hr />
 	</f:verbatim>
-	<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
-	
-		<h:outputLabel value="#{msg.userName}" />
-		<h:inputText id="name" value="#{login.userName}" size="20" />
-		<h:outputLabel value="#{msg.password}"/>
-		<h:inputSecret id="password" value="#{login.password}" size="20" />
+	<h:form>
+		<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
 		
-		<h:outputLabel value=" "/>
-		<h:commandButton id="Login" action="#{loginService.authenticate}" value="#{msg.login}"/>
-	</h:panelGrid>
+			<h:outputLabel value="#{msg.userName}" />
+			<h:inputText id="name" value="#{login.userName}" size="20" />
+			<h:outputLabel value="#{msg.password}"/>
+			<h:inputSecret id="password" value="#{login.password}" size="20" />
+			
+			<h:outputLabel value=" "/>
+			<h:commandButton action="#{loginService.authenticate}" value="#{msg.login}"/><a title="Register" href="register.jsp">New User Registration</a>
+		</h:panelGrid>
+	</h:form>
 	
 </f:view>
 </body>

@@ -20,7 +20,7 @@
 			<h3>Student Roster</h3>
 		</center>
 		<br />
-		<center><a title="Home" href="faces/home.jsp">Home</a></center>
+		<center><a title="Home" href="home.jsp">Home</a></center>
 		<br/>
 		<hr />
 	</f:verbatim>

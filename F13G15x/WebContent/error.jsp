@@ -12,6 +12,7 @@
 	<f:verbatim>
 		<center>
 			<h3>Error</h3>
+			<h5>Unauthorized User Access</h5>
 		</center>
 		<br />
 		<hr />
