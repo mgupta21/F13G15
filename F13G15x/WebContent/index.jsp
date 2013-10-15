@@ -11,7 +11,7 @@
 <f:view>
 	<f:loadBundle basename="messages" var="msg" />
 	<f:verbatim>
-		<center><a title="Login" href="faces/login.jsp">Login</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="New User" href="faces/register.jsp">Register</a></center>
+		<center><a title="Login" href="login.jsp">Login</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="New User" href="register.jsp">Register</a></center>
 		<br/><center><a href="pdf/documentation.pdf">Documentation</a></center>
 		<center>
 			<h3>Student Data Analysis</h3>
