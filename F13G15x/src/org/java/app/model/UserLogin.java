@@ -3,9 +3,10 @@ package org.java.app.model;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-@ManagedBean
+@ManagedBean(name="login")
 @SessionScoped
-public class login {
+
+public class UserLogin {
 	private String userName;
 	private String password;
 	

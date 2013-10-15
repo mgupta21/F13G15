@@ -5,7 +5,7 @@ import javax.faces.bean.SessionScoped;
 
 @ManagedBean
 @SessionScoped
-public class User {
+public class UserProfile {
 
 	private String firstName;
 	private String lastName;
