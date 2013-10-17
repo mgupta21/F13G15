@@ -24,4 +24,34 @@
     	<validator-id>org.java.app.validator.LoginValidator</validator-id>
     	<validator-class>org.java.app.validator.LoginValidator</validator-class>
     </validator>
+    <managed-bean>
+		<managed-bean-name>quizSubmitService</managed-bean-name>
+		<managed-bean-class>org.java.app.service.QuizSubmitService</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<navigation-rule>
+	<from-view-id>/quiz.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/quizanalysis.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<managed-bean>
+		<managed-bean-name>quizCreateService</managed-bean-name>
+		<managed-bean-class>org.java.app.service.QuizCreateService</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<navigation-rule>
+	<from-view-id>/CreateQuiz.jsp</from-view-id>
+	<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/quiz.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
 </faces-config>

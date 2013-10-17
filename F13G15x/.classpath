@@ -25,5 +25,7 @@
 			<attribute name="owner.project.facets" value="jst.jsf"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Math"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Tomahawk"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

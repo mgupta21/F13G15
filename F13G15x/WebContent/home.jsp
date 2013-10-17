@@ -15,10 +15,10 @@
 		</center>
 		<br />
 		<hr />
-		<center><a title="Uplaod Data" href="faces/upload.jsp">Upload Data Sheet</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Data Analysis" href="faces/analysis.jsp">Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-		<a title="View Report" href="faces/report.jsp">View Report</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Student Rooster" href="faces/roster.jsp">Roster</a>
-		&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Download Data" href="faces/download.jsp">Download Data</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Edit Document" href="faces/edit.jsp">Edit Document</a>
-		&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Assignment" href="faces/assignment.jsp">Assignment</a></center>
+		<center><a title="Uplaod Data" href="upload.jsp">Upload Data Sheet</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Data Analysis" href="analysis.jsp">Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+		<a title="View Report" href="report.jsp">View Report</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Student Rooster" href="roster.jsp">Roster</a>
+		&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Download Data" href="download.jsp">Download Data</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Edit Document" href="edit.jsp">Edit Document</a>
+		&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Assignment" href="createAssignment.jsp">Create Assignment</a></center>
 		<br/>
 	</f:verbatim>
 </f:view>
