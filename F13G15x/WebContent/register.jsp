@@ -31,27 +31,27 @@
 		<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
 		
 			<h:outputLabel value="#{msg.firstName}" />
-			<h:inputText id="firstName" value="#{userName.firstName}" size="20" />
+			<h:inputText id="firstName" value="#{userProfile.firstName}" size="20" />
 			<%-- <t:message id="firstNameError" for="firstName" styleClass="error" /> --%>
 			<h:outputLabel value="#{msg.lastName}" />
-			<h:inputText id="lastName" value="#{userName.lastName}" size="20" />
+			<h:inputText id="lastName" value="#{userProfile.lastName}" size="20" />
 			<%-- <t:message id="lastNameError" for="lastName" styleClass="error" /> --%>
 			<h:outputLabel value="#{msg.userId}" />
-			<h:inputText id="UIN" value="#{userName.UIN}" size="20" />
+			<h:inputText id="UIN" value="#{userProfile.UIN}" size="20" />
 			<%-- <t:message id="UINError" for="UIN" styleClass="error" /> --%>
 			<h:outputLabel value="#{msg.userName}" />
-			<h:inputText id="name" value="#{userName.name}" size="20" />
+			<h:inputText id="name" value="#{userProfile.email}" size="20" />
 			<%-- <t:message id="nameError" for="name" styleClass="error" /> --%>
 			<h:outputLabel value="#{msg.password}"/>
-			<h:inputSecret id="password" value="#{userName.password}" size="20" />
+			<h:inputSecret id="password" value="" size="20" />
 			<%-- <t:message id="passwordError" for="password" styleClass="error" /> --%>
 			<h:outputLabel value="#{msg.cpassword}"/>
-			<h:inputSecret id="cpassword" value="#{userName.password}" size="20" />
+			<h:inputSecret id="cpassword" value="" size="20" />
 			<%-- <t:validateEqual for="password" detailMessage="Password Mismatch" />
 			<t:message id="passwordError" for="cpassword" styleClass="error" /> --%>
 			
 			<h:outputLabel value=" "/>
-			<h:commandButton id="Register" action="#{userName.verify}" value="Register"/>
+			<h:commandButton id="Register" action="register.jsp" value="Register"/>
 		</h:panelGrid>
 	</h:form>
 

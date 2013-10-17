@@ -56,8 +56,6 @@ public class LoginService {
 	
 	public String logout() {
 		
-		System.out.println("User Logged Out");
-		
 			FacesContext fc = FacesContext.getCurrentInstance();
 			ExternalContext ec = fc.getExternalContext();
 

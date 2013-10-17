@@ -1,9 +1,7 @@
 package org.java.app.service;
-import java.util.HashMap;
+
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 
 import org.java.app.common.Constants.SERVER_RESPONSE;
 
@@ -13,11 +11,25 @@ import org.java.app.common.Constants.SERVER_RESPONSE;
 
 
 public class DataAnalysisService {
-
 	
+
+	public static String tableName = new String();
+	
+	@SuppressWarnings("unused")
+	private String getTablesList(String tableName)
+	{
+		return toString(); // To fetch table list from tables
+	}
+	
+	@SuppressWarnings("unused")
+	private String getColumnList(String tableName)
+	{
+		return toString(); // To fetch column list from tables
+	}
+
+		
 	public String result()
 	{
-		System.out.println("Inside Data Analysis");
 		return SERVER_RESPONSE.SUCCESS;
 	}
 

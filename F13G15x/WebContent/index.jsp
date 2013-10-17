@@ -24,9 +24,9 @@ body {
 		<br />
 		<hr />
 		<b>Team Members:</b><br/>
-		Mayank Gupta<br/>
-		Ankush Gupta<br/>
 		Amit Kumar Tripathi<br/>
+		Ankush Gupta<br/>
+		Mayank Gupta<br/>
 		Simranjit Gill<br/>
 	</f:verbatim>
 

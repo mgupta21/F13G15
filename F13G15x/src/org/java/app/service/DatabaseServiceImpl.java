@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.java.app.interfaces.IDatabaseService;
 
-public class IDatabaseServiceImpl implements IDatabaseService {
+public class DatabaseServiceImpl implements IDatabaseService {
 
 	@Override
 	public void connect(String serverName, String dbName, String userName,
