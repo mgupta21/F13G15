@@ -6,5 +6,8 @@ public class Constants {
 		public static String FAIL = "fail";
 		public static String LOGOUT = "logout";
 	}
+	public static class SESSION_RESPONSE {
+		public static String LOGOUT = "logout";
+	}
 
 }

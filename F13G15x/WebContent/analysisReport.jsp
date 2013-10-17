@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<link type="text/css" rel="stylesheet" href="../css/styles.css" />
 	<style>
 	body {
 		background-image: url(../images/bg.jpg);
@@ -17,7 +18,7 @@
 <f:loadBundle basename="messages" var="msg" />
 	<f:verbatim>
 		<center>
-			<h3>Roster</h3>
+			<h3>Data Analysis Report</h3>
 		</center>
 		<br />
 		<center><a title="Home" href="home.jsp">Home</a></center>
@@ -27,31 +28,35 @@
 	
 	<table class="Table">
 		<thead><tr>
-		   <th class="questionTableHeader" scope="col">Student UIN</th>
-		   <th class="questionTableHeader" scope="col">Name</th>
-		   <th class="questionTableHeader" scope="col">Qz 1 Score</th>
-		   <th class="questionTableHeader" scope="col">Qz 2 Score</th>
-		   <th class="questionTableHeader" scope="col">Asgn. 1 Score</th>
-
+		   <th class="questionTableHeader" scope="col">Table Name</th>
+		   <th class="questionTableHeader" scope="col">Column</th>
+		   <th class="questionTableHeader" scope="col"></th>
+		   <th class="questionTableHeader" scope="col">Analysis Type</th>
+		   <th class="questionTableHeader" scope="col"></th>
+		   <th class="questionTableHeader" scope="col">Value</th>
+		</tr></thead>
 		<tbody>
 		<tr class="questionTableOddRow">
-		   <td>67251751</td>
-		    <td>Student 1&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		     <td>100&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		      <td>90&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		       <td>85&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		       
+		   <td>Table 1</td>
+		   <td>Column 1</td>
+		   <td>&nbsp;&nbsp;&nbsp;</td>
+		   <td>Mean</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+		   <td>45</td>
 		</tr>
 		<tr class="questionTableEvenRow">
-		   <td>67251752</td>
-		    <td>Student 2&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		     <td>83&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		      <td>87&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		       <td>98&nbsp;&nbsp;&nbsp;&nbsp;</td>
-</tr>
-</table>
-<p><a title="Edit Roster" href="editRoster.jsp">Edit Roster</a></p>
+		   <td>Table 2</td>
+		   <td>Column 1</td>
+		   <td>&nbsp;&nbsp;&nbsp;</td>
+		   <td>Standard Deviation</td>
+		   <td>&nbsp;&nbsp;&nbsp;</td>
+		   <td>2.34</td>
+		</tr>
+		</table><br/>
 	
+		<h3>Graphical Analysis</h3>
+		<p><img alt="graph" src="../images/graph.png"></p>
+		
 	</h:form>	
 </f:view>
 </body>

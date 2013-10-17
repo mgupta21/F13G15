@@ -10,24 +10,24 @@
 	}
 	</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create Assignment</title>
+<title>Roster Report</title>
 </head>
 <body>
 <f:view>
-<f:loadBundle basename="messages" var="msg" />
+	<f:loadBundle basename="messages" var="msg" />
+	
 	<f:verbatim>
 		<center>
-			<h3>Create Assignment</h3>
+			<h3>Roster Data Analysis</h3>
 		</center>
-		
 		<br />
 		<center><a title="Home" href="home.jsp">Home</a></center>
+		<br/>
 		<hr />
 	</f:verbatim>
-	<h:form>
 	<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
 		<f:facet name="header">
-    		<h:outputText value="Select Quiz Table"/>
+    		<h:outputText value="Select Roster Sheet"/>
  		 </f:facet>
  		 <h:panelGrid columns="2" >
 		<h5>Select Table</h5>		
@@ -41,31 +41,29 @@
 		</h:panelGrid>
 	</h:panelGrid>
 	<br/>
-
-<h:panelGrid>
-<h:outputText>Select the column</h:outputText>
-<h:selectOneMenu >
-   	<f:selectItem itemValue="C1" itemLabel="Column 1" />
-   	<f:selectItem itemValue="C2" itemLabel="Column 2" />
-   	<f:selectItem itemValue="C3" itemLabel="Column 3" />
-</h:selectOneMenu>
-<h:outputText>Select the method</h:outputText>
-<h:selectOneMenu >
-   	<f:selectItem itemValue="M1" itemLabel="Mean" />
-   	<f:selectItem itemValue="M2" itemLabel="Median" />
-   	<f:selectItem itemValue="M3" itemLabel="Standard Deviation" />
-</h:selectOneMenu>
-<h:outputText>Enter the right answer upto 2 decimal places</h:outputText>
-<h:inputText></h:inputText>
-</h:panelGrid>	
-
-
- 		<center>
-				<h:commandButton id="create" value="Create Quiz" style="margin: 0 auto" action="#{quizCreateService.createQuiz}" />
-				<h:commandButton id="add" value="Add question" style="margin: 0 auto" action="#{createquiz.addQuestion}" />
-		</center>
-	</h:form>	
-
+	<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
+		<h5>Select Column</h5>
+		<h:selectOneRadio id="radioCol" value="#{analysis.column}" layout="pageDirection">
+			<f:selectItem itemValue="Col1" itemLabel="Column 1" />
+			<f:selectItem itemValue="Col2" itemLabel="Column 2" />
+			<f:selectItem itemValue="Col3" itemLabel="Column 3" />
+		</h:selectOneRadio>
+		<br/>
+		<h5>Select Analysis</h5>
+		<h:panelGrid columns="2">
+			<h:selectOneMenu style="width:150px" id="selectType" value="#{analysis.type}">
+				  <f:selectItems itemValue="Mean"  itemLabel="Mean"/>
+				  <f:selectItems itemValue="Median"  itemLabel="Median"/>
+				  <f:selectItems itemValue="Standard Deviation"  itemLabel="Standard Deviation"/>
+			</h:selectOneMenu> 
+		</h:panelGrid><br/>
+		<h:panelGrid columns="2">
+			<h:commandButton value="#{msg.gen}" action="#{loginService.authenticate}" />
+			<h:commandButton value="#{msg.back}" action="home.jsp?faces-redirect=true" />
+		</h:panelGrid>
+	</h:panelGrid>
+	
+	
 </f:view>
 </body>
 </html>

@@ -4,6 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<style>
+	body {
+		background-image: url(../images/bg.jpg);
+	}
+	</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -20,7 +25,7 @@
 			<h3>Generate Report</h3>
 		</center>
 		<br />
-		<center><a title="Home" href="faces/home.jsp">Home</a></center>
+		<center><a title="Home" href="home.jsp">Home</a></center>
 		<br/>
 		<hr />
 	</f:verbatim>

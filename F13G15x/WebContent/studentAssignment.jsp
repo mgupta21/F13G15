@@ -10,20 +10,28 @@
 	}
 	</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Student Assignments</title>
 </head>
 <body>
 <f:view>
+<f:loadBundle basename="messages" var="msg" />
 	<f:verbatim>
 		<center>
-			<h3>Error</h3>
-			<h5>Unauthorized User Access</h5>
+			<h3>Quiz</h3>
 		</center>
 		<br />
-		<center><a title="Login" href="login.jsp">Login</a></center>
-		<br/>
+		<center><a title="Home" href="home.jsp">Home</a></center>
 		<hr />
 	</f:verbatim>
+	<p>The following assignments are available for the logged in student</p>
+	
+	<ol>
+	<li><a title="quiz1" href="quiz.jsp">Quiz 1</a></li>
+	<li><a title="quiz2" href="quiz.jsp">Quiz 2</a></li>
+	<li><a title="quiz3" href="quiz.jsp">Quiz 3</a></li>
+	</ol>
+	
+	
 </f:view>
 </body>
 </html>

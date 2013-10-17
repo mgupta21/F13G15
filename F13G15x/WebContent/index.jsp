@@ -6,13 +6,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Welcome</title>
+<style>
+body {
+	background-image: url(../images/bg.jpg);
+}
+</style>
 </head>
 <body>
 <f:view>
 	<f:loadBundle basename="messages" var="msg" />
 	<f:verbatim>
 		<center><a title="Login" href="login.jsp">Login</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="New User" href="register.jsp">Register</a></center>
-		<br/><center><a href="pdf/documentation.pdf">Documentation</a></center>
+		<br/><center><a href="pdf/documentation.pdf" target="_blank">Documentation</a></center>
 		<center>
 			<h3>Student Data Analysis</h3>
 		</center>

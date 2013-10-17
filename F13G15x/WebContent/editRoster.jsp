@@ -18,7 +18,7 @@
 	
 	<f:verbatim>
 		<center>
-			<h3>Edit Document</h3>
+			<h3>Edit Roster Data</h3>
 		</center>
 		<br />
 		
@@ -27,34 +27,16 @@
 		<hr />
 	</f:verbatim>
 	<h:form>
-	<h:panelGrid  style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
-		<f:facet name="header">
-    		<h:outputText value="Select the type of Data you want to edit"/>
- 		 </f:facet>
-		<h:panelGrid >
-			<h:selectOneRadio id="radio" value=""
-				layout="pageDirection">
-				<f:selectItem itemValue="quiz" itemLabel="Quiz" />
-				<f:selectItem itemValue="exam" itemLabel="Exam" />
-			</h:selectOneRadio>
-		</h:panelGrid>
-		<h:panelGrid columns="2" >
-			<h:commandButton  value="#{msg.submit}" />
-			<h:commandButton value="#{msg.cancel}" action="home.jsp" />
-		</h:panelGrid>
-	</h:panelGrid>
-		<br/><br/>
 		
 	<h:panelGrid style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
 		<f:facet name="header">
-    		<h:outputText value="Select the sheet you want to edit"/>
+    		<h:outputText value="Select the Roster sheet to edit"/>
  		 </f:facet>
 		
 		<h:panelGrid >
 			<h:selectOneMenu id="dropdown" value="" >
 				
-				<f:selectItem itemValue="Sheet1" itemLabel="Sheet1" />
-				<f:selectItem itemValue="Sheet2" itemLabel="Sheet2" />
+				<f:selectItem itemValue="Sheet1" itemLabel="Roster" />
 			</h:selectOneMenu>
 		</h:panelGrid>
 		

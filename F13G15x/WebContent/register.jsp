@@ -6,6 +6,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<style>
+	body {
+		background-image: url(../images/bg.jpg);
+	}
+	</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registration</title>
 <link type="text/css" rel="stylesheet" href="../css/styles.css" />
@@ -18,6 +23,8 @@
 			<h3>Student Data Analysis</h3>
 		</center>
 		<br />
+		<center><a title="Welcome" href="index.jsp">Welcome Page</a></center>
+		<br/>
 		<hr />
 	</f:verbatim>
 	<h:form>

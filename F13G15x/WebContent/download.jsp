@@ -4,6 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<style>
+	body {
+		background-image: url(../images/bg.jpg);
+	}
+	</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Download</title>
 </head>
@@ -17,10 +22,11 @@
 		</center>
 		<br />
 		
-		<center><a title="Home" href="faces/home.jsp">Home</a></center>
+		<center><a title="Home" href="home.jsp">Home</a></center>
 		<br/>
 		<hr />
 	</f:verbatim>
+	<h:form>
 	<h:panelGrid  style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
 		<f:facet name="header">
     		<h:outputText value="Select the type of Data you want to download"/>
@@ -34,11 +40,11 @@
 			</h:selectOneRadio>
 		</h:panelGrid>
 		<h:panelGrid columns="2" >
-			<h:commandButton  value="#{msg.submit}"  action="#{loginService.authenticate}" />
+			<h:commandButton  value="#{msg.submit}" />
 			<h:commandButton value="#{msg.cancel}" action="home.jsp" />
 		</h:panelGrid>
 	</h:panelGrid>
-		<hr />
+	<br/>
 		
 	<h:panelGrid style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
 		<f:facet name="header">
@@ -61,11 +67,11 @@
 		</h:panelGrid>
 		
 		<h:panelGrid columns="2" >
-			<h:commandButton value="#{msg.submit}"  action="#{loginService.authenticate}" />
+			<h:commandButton value="Download" />
 			<h:commandButton value="#{msg.cancel}" action="home.jsp" />
 		</h:panelGrid>
 	</h:panelGrid>
-	
+	</h:form>
 	
 </f:view>
 </body>

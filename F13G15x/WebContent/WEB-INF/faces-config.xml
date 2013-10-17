@@ -5,6 +5,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
     version="2.1">
+    
+    <navigation-rule>
+	<from-view-id>/home.jsp</from-view-id>
+	<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/welcome.jsp</to-view-id>
+			<redirect />
+	</navigation-case>
+	
+	</navigation-rule>
     <navigation-rule>
 		<display-name>login</display-name>
 		<from-view-id>/login.jsp</from-view-id>
@@ -19,11 +29,13 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+  
     <validator>
     	<display-name>org.java.app.validator.LoginValidator</display-name>
     	<validator-id>org.java.app.validator.LoginValidator</validator-id>
     	<validator-class>org.java.app.validator.LoginValidator</validator-class>
     </validator>
+    
     <managed-bean>
 		<managed-bean-name>quizSubmitService</managed-bean-name>
 		<managed-bean-class>org.java.app.service.QuizSubmitService</managed-bean-class>
@@ -46,10 +58,19 @@
 	</managed-bean>
 	
 	<navigation-rule>
-	<from-view-id>/CreateQuiz.jsp</from-view-id>
+	<from-view-id>/createAssignment.jsp</from-view-id>
 	<navigation-case>
 			<from-outcome>success</from-outcome>
-			<to-view-id>/quiz.jsp</to-view-id>
+			<to-view-id>/studentAssignment.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+	<from-view-id>/analysis.jsp</from-view-id>
+	<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/analysisReport.jsp</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

@@ -4,6 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+		<style>
+	body {
+		background-image: url(../images/bg.jpg);
+	}
+	</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
@@ -13,17 +18,16 @@
 	
 	<f:verbatim>
 		<center>
-			<h3>Student Data Analysis</h3>
-		</center>
-		<br />
-		<center>
 			<h3>Upload Data Sheet</h3>
 		</center>
 		<br />
-		<center><a title="Home" href="faces/home.jsp">Home</a></center>
+		<center><a title="Home" href="home.jsp">Home</a></center>
 		<br/>
 		<hr />
 	</f:verbatim>
+	<br/><br/>
+	<center>
+	<h:form>
 	<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
 		<f:facet name="header">
     		<h:outputText value="Select and Upload Data Sheet"/>
@@ -33,7 +37,7 @@
 				layout="pageDirection">
 				<f:selectItem itemValue="quiz" itemLabel="Quiz" />
 				<f:selectItem itemValue="assignment" itemLabel="Assignment" />
-				<f:selectItem itemValue="rooster" itemLabel="Rooster" />
+				<f:selectItem itemValue="hw" itemLabel="Home Work" />
 			</h:selectOneRadio>
 		</h:panelGrid><br/>
 		<h:panelGrid columns="2">
@@ -45,7 +49,8 @@
 			<h:commandButton value="#{msg.back}" action="home.jsp" />
 		</h:panelGrid>
 	</h:panelGrid>
-	
+	</h:form>
+	</center>
 </f:view>
 </body>
 </html>

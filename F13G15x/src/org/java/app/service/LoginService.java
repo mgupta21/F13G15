@@ -5,9 +5,12 @@ import java.util.HashMap;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.java.app.common.Constants.SERVER_RESPONSE;
+import org.java.app.common.Constants.SESSION_RESPONSE;
 import org.java.app.model.UserLogin;
 
 
@@ -26,7 +29,6 @@ public class LoginService {
 		users.put("amitk07", "password1");
 		users.put("sgill21", "password1");
 	}
-	
 	
 	public String authenticate() {
 		
@@ -54,7 +56,15 @@ public class LoginService {
 	
 	public String logout() {
 		
-		return null;
+		System.out.println("User Logged Out");
+		
+			FacesContext fc = FacesContext.getCurrentInstance();
+			ExternalContext ec = fc.getExternalContext();
+
+			final HttpServletRequest req = (HttpServletRequest) ec.getRequest();
+			req.getSession(false).invalidate();
+			System.out.println(SESSION_RESPONSE.LOGOUT);
+			return SESSION_RESPONSE.LOGOUT;
 	}
 
 	public void setlogin(UserLogin login) {
