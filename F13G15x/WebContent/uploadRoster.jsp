@@ -25,6 +25,7 @@
 		<br/>
 		<hr />
 	</f:verbatim>
+	<h:form>
 	<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
 		<f:facet name="header">
     		<h:outputText value="Select Roster Sheet"/>
@@ -58,10 +59,11 @@
 			</h:selectOneMenu> 
 		</h:panelGrid><br/>
 		<h:panelGrid columns="2">
-			<h:commandButton value="#{msg.gen}" action="#{loginService.authenticate}" />
+			<h:commandButton value="#{msg.gen}" action="#{dataAnalysis.result}" />
 			<h:commandButton value="#{msg.back}" action="home.jsp?faces-redirect=true" />
 		</h:panelGrid>
 	</h:panelGrid>
+	</h:form>
 	
 	
 </f:view>
