@@ -30,7 +30,7 @@ body {
 		<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
 			<h5>Select Table</h5>
 			<h:panelGrid columns="2">
-				<h:selectOneMenu style="width:150px" id="selectTable" value="#{table.tableName}">
+				<h:selectOneMenu style="width:150px" id="selectTable" value="#{analysis.table}">
 					  <f:selectItems itemValue="Table 1"  itemLabel="Table 1"/>
 					  <f:selectItems itemValue="Table 2"  itemLabel="Table 2"/>
 					  <f:selectItems itemValue="Table 3"  itemLabel="Table 3"/>
@@ -44,7 +44,7 @@ body {
 		<br/>
 		<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
 			<h5>Select Column</h5>
-			<h:selectOneRadio id="radioCol" value="#{table.column}" layout="pageDirection">
+			<h:selectOneRadio id="radioCol" value="#{analysis.column}" layout="pageDirection">
 				<f:selectItem itemValue="Col1" itemLabel="Column 1" />
 				<f:selectItem itemValue="Col2" itemLabel="Column 2" />
 				<f:selectItem itemValue="Col3" itemLabel="Column 3" />
@@ -58,11 +58,11 @@ body {
 					  <f:selectItems itemValue="Standard Deviation"  itemLabel="Standard Deviation"/>
 				</h:selectOneMenu> 
 			</h:panelGrid><br/>
-			<h:panelGrid columns="2">
-				<h:commandButton value="#{msg.gen}" action="#{dataAnalysis.result}" />
-				<h:commandButton value="#{msg.back}" action="home.jsp" />
+				<h:panelGrid columns="2">
+					<h:commandButton value="#{msg.gen}" action="#{dataAnalysis.result}" />
+					<h:commandButton value="#{msg.back}" action="home.jsp" />
+				</h:panelGrid>
 			</h:panelGrid>
-		</h:panelGrid>
 	</h:form>
 	
 </f:view>

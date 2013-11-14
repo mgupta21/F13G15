@@ -9,6 +9,7 @@ public class UserProfile {
 
 	private String firstName;
 	private String lastName;
+	private UserRole userRole;
 	private String UIN;
 	private String email;
 	
@@ -35,6 +36,12 @@ public class UserProfile {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public UserRole getUserRole() {
+		return userRole;
+	}
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 	
 }

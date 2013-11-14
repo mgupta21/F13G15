@@ -2,29 +2,24 @@ package org.java.app.model;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 
-import org.java.app.service.LoginService;
-import org.java.app.service.UserService;
-
-
-@ManagedBean(name="userDataAccess")
+@ManagedBean(name="uData")
+@SessionScoped
 public class UserDataAccess {
 	
-	@ManagedProperty(value = "#{loginService}")
-	private LoginService loginService;
+	@ManagedProperty(value = "#{userLogin}")
+	private UserLogin userLogin;
 	
 	@ManagedProperty(value = "#{userProfile}")
 	private UserProfile userProfile;
 	
-	@ManagedProperty(value = "#{userService}")
-	private UserService userService;
-
-	public LoginService getLoginService() {
-		return loginService;
+	public UserLogin getUserLogin() {
+		return userLogin;
 	}
 
-	public void setLoginService(LoginService loginService) {
-		this.loginService = loginService;
+	public void setUserLogin(UserLogin userLogin) {
+		this.userLogin = userLogin;
 	}
 
 	public UserProfile getUserProfile() {
@@ -33,14 +28,6 @@ public class UserDataAccess {
 
 	public void setUserProfile(UserProfile userProfile) {
 		this.userProfile = userProfile;
-	}
-
-	public UserService getUserService() {
-		return userService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
 	}
 
 }

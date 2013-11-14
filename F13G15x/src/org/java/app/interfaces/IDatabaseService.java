@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface IDatabaseService {
 
-	public void connect(String serverName, String dbName, String userName, String password);
+	public void connect(String serverAdd, String schema, String user, String password);
 
 	public void disconnect();
 	

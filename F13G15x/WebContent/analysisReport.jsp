@@ -18,7 +18,7 @@
 <f:loadBundle basename="messages" var="msg" />
 	<f:verbatim>
 		<center>
-			<h3>Data Analysis Report</h3>
+			<h3>Analysis Report</h3>
 		</center>
 		<br />
 		<center><a title="Home" href="home.jsp">Home</a></center>

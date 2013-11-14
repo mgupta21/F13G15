@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13816360617960" configfile="/F13G15x/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="login" x="122" y="562" id="pf13816669592651" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf13816669592653 pf13820192414390 pf13820192414391" path="/login.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="error" x="338" y="178" id="pf13816669592655" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf13816669592653" path="/error.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="quiz" x="338" y="1330" id="pf13819878176300" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf13819878176301" inlinks="pf13819920732815" path="/quiz.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="quizanalysis" x="554" y="1330" id="pf13819878176303" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf13819878176301" path="/quizanalysis.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="createAssignment" x="122" y="1330" id="pf13819920732816" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf13819920732815" path="/createAssignment.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="welcome" x="338" y="946" id="pf13819927191918" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf13820192414391" path="/welcome.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="home" x="338" y="562" id="pf13820192414412" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13820192414390" path="/home.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="home" id="pf138201964650911" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf138201964650912" path="/home.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="welcome" x="204" y="84" id="pf138201964650913" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf138201964650912" path="welcome.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" x="338" y="2282" id="pf13816669592651" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" outlinks="pf13816669592653 pf13820192414390" inlinks="pf13841732759690" path="/login.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="error" x="554" y="2484" id="pf13816669592655" referenceLink="//@navigationRule.2/@navigationCase.1/@toViewId|" inlinks="pf13816669592653 pf13841732759691" path="/error.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="quiz" x="122" y="178" id="pf13819878176300" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf13819878176301" path="/quiz.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="quizanalysis" x="338" y="178" id="pf13819878176303" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf13819878176301" path="/quizanalysis.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="createAssignment" x="122" y="563" id="pf13819920732816" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf13820447570190" path="/createAssignment.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="home" x="554" y="2100" id="pf13820192414412" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf13843736701790" inlinks="pf13820192414390" path="/home.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="home" x="122" y="947" id="pf138201964650911" referenceLink="//@navigationRule.1/@fromViewId|" path="/home.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="welcome" x="122" y="2100" id="pf138201964650913" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" path="welcome.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="studentAssignment" x="338" y="563" id="pf13820447570192" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf13820447570190" path="/studentAssignment.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="analysis" x="122" y="1332" id="pf13820447570193" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf13820447570194" path="/analysis.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="analysisReport" x="338" y="1524" id="pf13820447570195" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf13820447570194 pf13820447570196" path="/analysisReport.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="uploadRoster" x="122" y="1716" id="pf13820447570207" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf13820447570196" path="/uploadRoster.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="register" x="122" y="2484" id="pf13841732759712" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf13841732759690 pf13841732759691" path="/register.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="upload" id="pf13841764554960" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf13841764554961" path="/upload.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="persistFile" id="pf13841764554962" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" inlinks="pf13841764554961" path="/persistFile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="index" id="pf13843736701801" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13843736701790" path="/index.jsp"/>
   <links id="pf13816669592653" target="pf13816669592655" source="pf13816669592651" outcome="fail" redirect="true"/>
   <links id="pf13819878176301" target="pf13819878176303" source="pf13819878176300" outcome="success" redirect="true"/>
-  <links id="pf13819920732815" target="pf13819878176300" source="pf13819920732816" outcome="success" redirect="true"/>
   <links id="pf13820192414390" target="pf13820192414412" source="pf13816669592651" outcome="success" redirect="true"/>
-  <links id="pf13820192414391" target="pf13819927191918" source="pf13816669592651"/>
-  <links id="pf138201964650912" target="pf138201964650913" source="pf138201964650911" outcome="logout" redirect="true"/>
+  <links id="pf13820447570190" target="pf13820447570192" source="pf13819920732816" outcome="success" redirect="true"/>
+  <links id="pf13820447570194" target="pf13820447570195" source="pf13820447570193" outcome="success" redirect="true"/>
+  <links id="pf13820447570196" target="pf13820447570195" source="pf13820447570207" outcome="success" redirect="true"/>
+  <links id="pf13841732759690" target="pf13816669592651" source="pf13841732759712" outcome="success" redirect="true"/>
+  <links id="pf13841732759691" target="pf13816669592655" source="pf13841732759712" outcome="fail" redirect="true"/>
+  <links id="pf13841764554961" target="pf13841764554962" source="pf13841764554960" outcome="persist" redirect="true"/>
+  <links id="pf13843736701790" target="pf13843736701801" source="pf13820192414412" outcome="logout" redirect="true"/>
 </pageflow:Pageflow>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
 <%@ taglib prefix="h"  uri="http://java.sun.com/jsf/html"%>
+<%@ taglib prefix="t" uri="http://myfaces.apache.org/tomahawk"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,28 +28,35 @@
 	</f:verbatim>
 	<br/><br/>
 	<center>
-	<h:form>
-	<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
-		<f:facet name="header">
-    		<h:outputText value="Select and Upload Data Sheet"/>
- 		 </f:facet>
-		<h:panelGrid columns="1">
-			<h:selectOneRadio id="radio" value=""
-				layout="pageDirection">
-				<f:selectItem itemValue="quiz" itemLabel="Quiz" />
-				<f:selectItem itemValue="assignment" itemLabel="Assignment" />
-				<f:selectItem itemValue="hw" itemLabel="Home Work" />
-			</h:selectOneRadio>
-		</h:panelGrid><br/>
-		<h:panelGrid columns="2">
-			<h:inputText id="file" value="" size="60" />&nbsp;&nbsp;
-			<h:commandButton value="Browse" action="#{loginService.authenticate}" />
-		</h:panelGrid><br/>
-		<h:panelGrid columns="2">
-			<h:commandButton value="#{msg.upload}" action="#{loginService.authenticate}" />
-			<h:commandButton value="#{msg.back}" action="home.jsp" />
+	<h:form enctype="multipart/form-data">
+		<h:panelGrid columns="2" style="background-color: Beige; border-bottom-style: solid; border-top-style: solid; border-left-style: solid; border-right-style: solid" >
+			<f:facet name="header">
+	    		<h:outputText value="#{msg.uploadHeader}"/>
+	 		 </f:facet>
+	 		 
+			<h:panelGrid columns="2">
+				<h:selectOneRadio id="radio" value="#{fileUpload.tableType}" layout="pageDirection">
+					<f:selectItem itemValue="qzx" itemLabel="Quiz" />
+					<f:selectItem itemValue="asx" itemLabel="Assignment" />
+					<f:selectItem itemValue="hwx" itemLabel="Home Work" />
+					<f:selectItem itemValue="rsx" itemLabel="Roster" />
+				</h:selectOneRadio>
+			</h:panelGrid><br/>
+			
+			<h:outputLabel for="tableName" value="#{msg.tableName}" />
+				<h:inputText id="tableName" value="#{fileUpload.tableName}" required="true" size="15" maxlength="15" />
+				<t:message for="tableName" styleClass="error"></t:message>
+			<br/>
+			
+			<h:outputLabel for="FileUpload" value="#{msg.chooseFile}" />
+				<t:inputFileUpload id="FileUpload" storage="default" value="#{fileUpload.uploadedFile}" required="true">
+				</t:inputFileUpload>
+			<t:message for="FileUpload" styleClass="error"></t:message>
+			
+			<h:commandButton value="#{msg.upload}" action="persist" />
+			
 		</h:panelGrid>
-	</h:panelGrid>
+		
 	</h:form>
 	</center>
 </f:view>

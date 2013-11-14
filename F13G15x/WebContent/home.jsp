@@ -10,7 +10,7 @@
 	}
 	</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome, Mayank</title>
+<title>Welcome</title>
 </head>
 	<body>
 		<f:view>
@@ -20,7 +20,8 @@
 						<p class="right">
 							<%-- <h:outputLabel value=" "/>
 							<h:commandButton value="#{msg.logout}" action="#{loginService.logout}"/> --%>
-							<a title="Welcome" href="index.jsp">Logout</a>
+							<h:commandLink value="#{msg.logout}" action="#{loginService.logout}" /><!-- <a title="Welcome" href="index.jsp">Logout</a> -->
+							<h:outputText value="Welcome #{uData.userProfile.lastName}, #{uData.userProfile.firstName}" style="font-size: 20px; font-weight: bold" > </h:outputText>						
 						</p>
 					</h:panelGrid>
 				</h:form>

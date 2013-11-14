@@ -1,6 +1,7 @@
 package org.java.app.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -9,49 +10,77 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.java.app.common.Constants.SERVER_RESPONSE;
+import org.java.app.common.Constants;
 import org.java.app.common.Constants.SESSION_RESPONSE;
+import org.java.app.exceptions.DuplicateUserException;
+import org.java.app.model.UserDataAccess;
 import org.java.app.model.UserLogin;
-
+import org.java.app.model.UserProfile;
+import org.java.app.model.UserRole;
+import org.java.app.model.UserTable;
 
 @ManagedBean(name="loginService")
 @SessionScoped
 public class LoginService {
+	
+	@ManagedProperty(value = "#{uData}")
+	private UserDataAccess userData;
+	
+	@ManagedProperty(value = "#{userService}")
+	private UserService userService;
 
-	@ManagedProperty(value="#{login}")
-	public UserLogin login;
+	@ManagedProperty(value="#{userLogin}")
+	public UserLogin userLogin;
+	
+	private int role;
 	
 	public HashMap<String, String> users = new HashMap<String, String>();
 	
-	public LoginService(){
-		users.put("mgupta21", "password1");
-		users.put("agupta53", "password1");
-		users.put("amitk07", "password1");
-		users.put("sgill21", "password1");
-	}
-	
 	public String authenticate() {
 		
-		String password = login.getPassword();
-		String userId = login.getUserName();
-		if (password != null && password.trim() !="" && userId.trim() !="" && userId != null)	{
-			if (users.containsKey(userId) && users.get(userId).equals(password)){
-				
-				return SERVER_RESPONSE.SUCCESS;
-				
-			}else{
-				return SERVER_RESPONSE.FAIL;
-			}
+		UserLogin userLogin = this.userData.getUserLogin();
+		HashMap<String, Object> userDBData = new HashMap<String, Object>();
+		
+		userDBData.put(Constants.USER_DATA_COLUMNS.USERNAME, userLogin.getUserName());
+		userDBData.put(Constants.USER_DATA_COLUMNS.PASSWORD, userLogin.getPassword());
+			
+		if(userService.validateUser(userDBData)){
+			userService.setUserProfile(); // Once the user logs in explicitly set Profile
+			return Constants.SERVER_RESPONSE.SUCCESS;
 		}
-		else{
-			return SERVER_RESPONSE.FAIL;
-		}
-}
-	
+		return Constants.SERVER_RESPONSE.FAIL;
+		
+	}
+		
+		
 	public String login() {
 		// Todo: Track user session and IP data
 	
 		return null;
+	}
+	
+	public String register() throws Exception{
+		//this.userService = new UserService();
+		UserProfile userProfile = this.userData.getUserProfile();
+		
+		if(this.getRole() == UserRole.STUDENT.getRoleID()){
+			userProfile.setUserRole(UserRole.STUDENT);
+		}else{
+			userProfile.setUserRole(UserRole.PROF);
+		}
+		
+		try {
+			
+			userService.registerUser(userData);
+			return Constants.SERVER_RESPONSE.SUCCESS;
+			
+		} catch (DuplicateUserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return Constants.SERVER_RESPONSE.FAIL;
+		
 	}
 	
 	public String logout() {
@@ -65,10 +94,6 @@ public class LoginService {
 			return SESSION_RESPONSE.LOGOUT;
 	}
 
-	public void setlogin(UserLogin login) {
-		this.login = login;
-	}
-
 	public HashMap<String, String> getUsers() {
 		return users;
 	}
@@ -76,4 +101,37 @@ public class LoginService {
 	public void setUsers(HashMap<String, String> users) {
 		this.users = users;
 	}
+
+	public UserDataAccess getUserData() {
+		return userData;
+	}
+
+	public void setUserData(UserDataAccess userData) {
+		this.userData = userData;
+	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public UserLogin getUserLogin() {
+		return userLogin;
+	}
+
+	public void setUserLogin(UserLogin userLogin) {
+		this.userLogin = userLogin;
+	}
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+
 }
