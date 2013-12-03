@@ -7,14 +7,95 @@
     version="2.1">
     
     <navigation-rule>
+	<display-name>home</display-name>
 	<from-view-id>/home.jsp</from-view-id>
-	<navigation-case>
+		<navigation-case>
 			<from-outcome>logout</from-outcome>
 			<to-view-id>/index.jsp</to-view-id>
 			<redirect />
-	</navigation-case>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ViewRoster</from-outcome>
+			<to-view-id>/roster.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
 	</navigation-rule>
 	
+	<navigation-rule>
+		<display-name>uploadFile</display-name>
+		<from-view-id>/uploadFile.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>persistFile</from-outcome>
+			<to-view-id>/persistFile.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>Corrupt</from-outcome>
+			<to-view-id>/corruptFile.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>uploadRoster</display-name>
+		<from-view-id>/uploadRoster.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>persistFile</from-outcome>
+			<to-view-id>/persistFile.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>Corrupt</from-outcome>
+			<to-view-id>/corruptFile.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>persistFile</display-name>
+		<from-view-id>/persistFile.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>UserTableUploaded</from-outcome>
+			<to-view-id>/uploadSuccess.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/home.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+    <navigation-rule>
+		<display-name>createAssignment</display-name>
+		<from-view-id>/createAssignment.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>true</from-outcome>
+			<to-view-id>/createAssignment.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>examination</display-name>
+		<from-view-id>/examination.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>ExamSubmitted</from-outcome>
+			<to-view-id>/examResult.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+    
+    <navigation-rule>
+		<display-name>examResult</display-name>
+		<from-view-id>/examResult.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>Home</from-outcome>
+			<to-view-id>/home.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+    
     <navigation-rule>
 		<display-name>login</display-name>
 		<from-view-id>/login.jsp</from-view-id>
@@ -30,6 +111,26 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	 <navigation-rule>
+		<display-name>createAssignment</display-name>
+		<from-view-id>/createAssignment.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>TableSet</from-outcome>
+			<to-view-id>/createAssignment.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>AssignmentCreated</from-outcome>
+			<to-view-id>/assignmentSuccess.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+		<!-- <navigation-case>
+			<from-outcome>Error</from-outcome>
+			<to-view-id>/createAssignment.jsp</to-view-id>
+			<redirect />
+		</navigation-case> -->
+	</navigation-rule>
+	
     <navigation-rule>
 		<display-name>register</display-name>
 		<from-view-id>/register.jsp</from-view-id>
@@ -38,33 +139,12 @@
 			<to-view-id>/login.jsp</to-view-id>
 			<redirect />
 		</navigation-case>
-		<navigation-case>
-			<from-outcome>fail</from-outcome>
-			<to-view-id>/error.jsp</to-view-id>
+		<!-- <navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/register.jsp</to-view-id>
 			<redirect />
-		</navigation-case>
+		</navigation-case> -->
 	</navigation-rule>
-    
-    <managed-bean>
-		<managed-bean-name>quizSubmitService</managed-bean-name>
-		<managed-bean-class>org.java.app.service.QuizSubmitService</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-	
-	<navigation-rule>
-	<from-view-id>/quiz.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>success</from-outcome>
-			<to-view-id>/quizanalysis.jsp</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-	
-	<managed-bean>
-		<managed-bean-name>quizCreateService</managed-bean-name>
-		<managed-bean-class>org.java.app.service.QuizCreateService</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
 	
 	<navigation-rule>
 	<from-view-id>/createAssignment.jsp</from-view-id>
@@ -76,32 +156,19 @@
 	</navigation-rule>
 	
 	<navigation-rule>
-	<from-view-id>/analysis.jsp</from-view-id>
-	<navigation-case>
-			<from-outcome>success</from-outcome>
-			<to-view-id>/analysisReport.jsp</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-	
-	<navigation-rule>
-	<from-view-id>/uploadRoster.jsp</from-view-id>
-	<navigation-case>
-			<from-outcome>success</from-outcome>
-			<to-view-id>/analysisReport.jsp</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-	
-	 <navigation-rule>
-		<display-name>upload</display-name>
-		<from-view-id>/upload.jsp</from-view-id>
+		<display-name>studentAssignment</display-name>
+		<from-view-id>/studentAssignment.jsp</from-view-id>
 		<navigation-case>
-			<from-outcome>persist</from-outcome>
-			<to-view-id>/persistFile.jsp</to-view-id>
+			<from-outcome>Success</from-outcome>
+			<to-view-id>/examination.jsp</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	
+	<managed-bean>
+	    <managed-bean-name>Error</managed-bean-name>
+	    <managed-bean-class>org.java.app.common.Error</managed-bean-class>
+	    <managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
 </faces-config>

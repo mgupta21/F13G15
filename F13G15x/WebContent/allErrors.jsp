@@ -4,31 +4,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<style>
+	body {
+		background-image: url(../images/bg.jpg);
+	}
+	</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link type="text/css" rel="stylesheet" href="../css/styles.css" />
-<style>
-body {
-	background-image: url(../images/bg.jpg);
-}
-</style>
-<title>Student Data Analysis</title>
+<title>Insert title here</title>
 </head>
 <body>
 <f:view>
-	<f:loadBundle basename="messages" var="msg" />
-	
 	<f:verbatim>
 		<center>
-			<h3>Data Analysis</h3>
+			<h3>Error</h3>
+			<h5>Internal Error</h5>
 		</center>
 		<br />
-		<center><a title="Home" href="home.jsp">Home</a></center>
+		<center><a title="Login" href="login.jsp">Login</a></center>
 		<br/>
 		<hr />
 	</f:verbatim>
-	<h:form>
-		
-	</h:form>
+	<h:panelGrid>
+	    <h:outputText value="The follow error occured:" />
+	    <h:inputTextarea style="width: 100%;" rows="20" readonly="true" 
+	                                 value="#{Error.stackTrace}" />
+	</h:panelGrid>
 	
 </f:view>
 </body>

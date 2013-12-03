@@ -24,19 +24,42 @@
 							<h:outputText value="Welcome #{uData.userProfile.lastName}, #{uData.userProfile.firstName}" style="font-size: 20px; font-weight: bold" > </h:outputText>						
 						</p>
 					</h:panelGrid>
-				</h:form>
-				
 				<f:verbatim>
 					<center><h3>Student Data Analysis</h3></center><br />
 					<center><a href="pdf/documentation.pdf" target="_blank">Documentation</a></center><br/>
 					<hr />
-					<center><a title="Uplaod Data" href="upload.jsp">Upload Data Sheet</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Data Analysis" href="analysis.jsp">Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-					<a title="View Report" href="studentAssignment.jsp">Student Assignment</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Student Rooster" href="uploadRoster.jsp">Upload Roster</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Student Rooster" href="roster.jsp">View Roster</a>
-					&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Download Data" href="download.jsp">Download Data</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Edit Document" href="edit.jsp">Edit Document</a>
-					&nbsp;&nbsp;|&nbsp;&nbsp;<a title="Assignment" href="createAssignment.jsp">Create Assignment</a></center>
+					<center>
+						<h:panelGrid rendered="#{loginService.student}">
+							<a title="Uplaod Data" href="uploadFile.jsp">Upload Data Sheet</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Data Analysis" href="analysis.jsp">Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="View Report" href="studentAssignment.jsp">Student Assignment</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Download Data" href="download.jsp">Download Data</a>
+						</h:panelGrid>
+						<h:panelGrid rendered="#{loginService.prof}">
+							<a title="Uplaod Data" href="uploadFile.jsp">Upload Data Sheet</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Uplaod Roster" href="uploadRoster.jsp">Upload Roster</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Download Data" href="download.jsp">Download Data</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="View Rooster" href="roster.jsp">View Roster</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Rooster Data Analysis" href="rosterAnalysis.jsp">Roster Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Edit Document" href="edit.jsp">Edit Document</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Create Assignment" href="createAssignment.jsp">Create Assignment</a>
+						</h:panelGrid>
+						<h:panelGrid rendered="#{loginService.admin}">
+							<a title="Uplaod Data" href="uploadFile.jsp">Upload Data Sheet</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Uplaod Roster" href="uploadRoster.jsp">Upload Roster</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Download Data" href="download.jsp">Download Data</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Data Analysis" href="analysis.jsp">Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Edit Document" href="edit.jsp">Edit Document</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<!-- <a title="View Report" href="studentAssignment.jsp">Student Assignment</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+							<a title="Create Assignment" href="createAssignment.jsp">Create Assignment</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="View Rooster" href="roster.jsp">View Roster</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Rooster Data Analysis" href="rosterAnalysis.jsp">Roster Data Analysis</a>
+						</h:panelGrid>
+					<!-- <a title="Assignment" href="createAssignment.jsp">Create Assignment</a> -->
+					</center>
 					<br/>
 				</f:verbatim>
-			
+			</h:form>
 		</f:view>
 	</body>
 </html>

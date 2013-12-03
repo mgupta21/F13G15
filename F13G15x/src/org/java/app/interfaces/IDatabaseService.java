@@ -1,31 +1,27 @@
 package org.java.app.interfaces;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import org.java.app.exceptions.DuplicateTableException;
+import org.java.app.exceptions.InsertionException;
 
 public interface IDatabaseService {
 
-	public void connect(String serverAdd, String schema, String user, String password);
-
-	public void disconnect();
-	
-	public boolean isConnected();
-
-	public void createTable(String tableName, Map<String, String> columnInfo);
-	
-	public void createTable(String tableName, List<String> columnMetaList);
+	public class TableColumnMeta{
 		
-	public void insertRecord(String tableName, HashMap<String, Object> map);
-	
-	public ResultSet executeQuery(String queryString);
+		public String tableColName;
+		public String colDataType;
+		public boolean isAutoincrement;
+		public boolean isNotNull;
+		public boolean isPrimaryKey;
+		
+	}
 
-	public PreparedStatement createPrepareStatement(String query);
+	public void createDBTable(String dbTableName, List<TableColumnMeta> colMetaList) throws DuplicateTableException;
+	
+	void updateUploadedTable(String query) throws InsertionException;
 
-	public void commitTransaction();
-	
-	public List<Object> getColumnData(String dbTableName, int rowCount, List<Object> columnList);
-	
+	public void updateTableMapper(String uSER_TABLE_MAPPER, HashMap<String, Object> data);
+
 }

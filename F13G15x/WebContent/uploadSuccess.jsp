@@ -15,38 +15,37 @@
 </head>
 <body>
 <f:view>
-<f:loadBundle basename="messages" var="msg" />
 	<f:verbatim>
 		<center>
-			<h3>Roster</h3>
+			<h3>File Upload Success</h3>
 		</center>
 		<br />
 		<center><a title="Home" href="home.jsp">Home</a></center>
+		<br/>
 		<hr />
 	</f:verbatim>
 	<h:form>
 		<center>
-			<h3>Roster Data</h3>
-			<h3>Course - <h:outputLabel value="Stat 901"></h:outputLabel></h3>
+			<h3>Uploaded Table</h3>
+			<h:panelGrid columns="2">
+				<h:outputText value="Number Of Columns: "/>
+				<h:outputText value="#{fileUploadService.numberColumns }"/>
+				<h:outputText value="Number Of Rows: "/>
+				<h:outputText value="#{fileUploadService.numberRows }"/>
+			</h:panelGrid><br/>
 			<h:panelGrid columns="2" >
-					<t:dataTable value="#{rosterService.result}" var="row" border="1" cellspacing="0" cellpadding="1" width="800">
-						<t:columns var="col" value="#{rosterService.columnNames}">
-							<f:facet name="header">
-								<t:outputText value="#{col}"></t:outputText>
-							</f:facet>
-							<t:outputText value="#{row[col]}" />
-						</t:columns>
-					 -
-					 
-					 </t:dataTable>
+				<t:dataTable value="#{fileUploadService.result}" var="row" border="1" cellspacing="0" cellpadding="1" width="800">
+					<t:columns var="col" value="#{fileUploadService.columnNames}">
+						<f:facet name="header">
+							<t:outputText value="#{col}"></t:outputText>
+						</f:facet>
+						<t:outputText value="#{row[col]}"/>
+					</t:columns>
+				</t:dataTable>
 			</h:panelGrid>
 		</center>
+	</h:form>
 	
-
-	
-	<p><a title="Edit Roster" href="editRoster.jsp">Edit Roster</a></p>
-	
-	</h:form>	
 </f:view>
 </body>
 </html>

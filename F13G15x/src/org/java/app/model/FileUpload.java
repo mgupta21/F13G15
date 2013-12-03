@@ -6,9 +6,12 @@ import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.html.HtmlDataTable;
 
 import org.apache.myfaces.custom.fileupload.UploadedFile;
+import org.java.app.exceptions.CorruptFileException;
+import org.java.app.exceptions.DuplicateTableException;
+import org.java.app.exceptions.InsertionException;
+import org.java.app.service.FileUploadFactory;
 
 @ManagedBean(name = "fileUpload")
 @SessionScoped
@@ -18,13 +21,14 @@ public class FileUpload {
 	private String tableName;
 	private String tableType;
 	private TableColumn[] columns;
-	private HtmlDataTable htmlDataTable;
-	/*@ManagedProperty(value="userLogin")
-	private UserLogin userLogin;*/
 	
-	public String createTable() {
+	@ManagedProperty(value="#{fileUploadFactory}")
+	private FileUploadFactory fileUploadFactory;
+	
+	public void uploadUserTable() throws DuplicateTableException, IOException, InsertionException{
+			
+		fileUploadFactory.dataBaseUpload(tableName, tableType, columns, uploadedFile.getInputStream());
 		
-		return "success";
 	}
 	
 	public UploadedFile getUploadedFile() {
@@ -45,17 +49,26 @@ public class FileUpload {
 	public void setTableType(String tableType) {
 		this.tableType = tableType;
 	}
-	public HtmlDataTable getHtmlDataTable() {
-		return htmlDataTable;
-	}
-	public void setHtmlDataTable(HtmlDataTable htmlDataTable) {
-		this.htmlDataTable = htmlDataTable;
-	}
-	public TableColumn[] getColumns() {
+	public TableColumn[] getColumns() throws CorruptFileException {
+		
+		try {
+			columns = CSVUploader.getColumns(uploadedFile.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return columns;
 	}
+	
 	public void setColumns(TableColumn[] columns) {
 		this.columns = columns;
+	}
+	
+	public FileUploadFactory getFileUploadFactory() {
+		return fileUploadFactory;
+	}
+
+	public void setFileUploadFactory(FileUploadFactory fileUploadFactory) {
+		this.fileUploadFactory = fileUploadFactory;
 	}
 	
 }

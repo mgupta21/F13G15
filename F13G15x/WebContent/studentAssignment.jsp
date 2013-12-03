@@ -17,19 +17,32 @@
 <f:loadBundle basename="messages" var="msg" />
 	<f:verbatim>
 		<center>
-			<h3>Quiz</h3>
+			<h3>Active Assignments</h3>
 		</center>
 		<br />
 		<center><a title="Home" href="home.jsp">Home</a></center>
 		<hr />
 	</f:verbatim>
-	<p>The following assignments are available for the logged in student</p>
-	
-	<ol>
-	<li><a title="quiz1" href="quiz.jsp">Quiz 1</a></li>
-	<li><a title="quiz2" href="quiz.jsp">Quiz 2</a></li>
-	<li><a title="quiz3" href="quiz.jsp">Quiz 3</a></li>
-	</ol>
+	<h:form>
+		<center>
+			<h:panelGrid rendered="#{!empty userService.userAssignments}">
+				<h:panelGrid columns="2">
+					<h:outputText value="Select examination"></h:outputText>
+					<h:selectOneMenu value="#{assignmentService.examSelected}">
+						<f:selectItems value="#{userService.userAssignments}" var="userAssignment" itemValue="#{userAssignment}" itemLabel="#{userAssignment}" />
+					</h:selectOneMenu>
+				</h:panelGrid>
+				
+				<h:commandButton action="#{assignmentService.takeExamination}" value="Take Examination"></h:commandButton>
+			</h:panelGrid>
+		</center>
+		
+		<center>
+			<h:panelGrid rendered="#{empty userService.userAssignments}">
+				<h:outputText value="#{msg.noAssignment}"/>
+			</h:panelGrid>
+		</center>	
+	</h:form>
 	
 	
 </f:view>

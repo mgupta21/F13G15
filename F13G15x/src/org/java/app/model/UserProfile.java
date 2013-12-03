@@ -12,6 +12,7 @@ public class UserProfile {
 	private UserRole userRole;
 	private String UIN;
 	private String email;
+	private String course;
 	
 	public String getFirstName() {
 		return firstName;
@@ -42,6 +43,12 @@ public class UserProfile {
 	}
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
+	}
+	public String getCourse() {
+		return course;
+	}
+	public void setCourse(String course) {
+		this.course = course;
 	}
 	
 }

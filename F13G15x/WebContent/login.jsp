@@ -33,6 +33,11 @@
 				<h:outputLabel value="#{msg.password}"/>
 				<h:inputSecret id="password" value="#{uData.userLogin.password}" size="20" />
 				
+				<h:outputLabel value="#{msg.course}" />
+				<h:selectOneMenu id="course" value="#{uData.userProfile.course}" required="true">
+					<f:selectItems value="#{ddList.courses}" var="course" itemValue="#{course}" itemLabel="#{course}" />
+				</h:selectOneMenu>
+				
 				<h:outputLabel value=" "/>
 				<h:commandButton action="#{loginService.authenticate}" value="#{msg.login}"/>
 				<span style="text-align: center;font-size: 13px; margin-top: 10px;">Not Registered? <a title="Register" href="register.jsp">Create an account</a></span>

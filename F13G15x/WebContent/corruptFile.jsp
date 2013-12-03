@@ -15,38 +15,19 @@
 </head>
 <body>
 <f:view>
-<f:loadBundle basename="messages" var="msg" />
 	<f:verbatim>
 		<center>
-			<h3>Roster</h3>
+			<h3>File Upload Error</h3>
+			<h5 style="color: #FF0000;">Uploaded File is Corrupt. Only a CSV file in valid format can be uploaded</h5>
 		</center>
 		<br />
 		<center><a title="Home" href="home.jsp">Home</a></center>
+		<br/>
 		<hr />
 	</f:verbatim>
 	<h:form>
-		<center>
-			<h3>Roster Data</h3>
-			<h3>Course - <h:outputLabel value="Stat 901"></h:outputLabel></h3>
-			<h:panelGrid columns="2" >
-					<t:dataTable value="#{rosterService.result}" var="row" border="1" cellspacing="0" cellpadding="1" width="800">
-						<t:columns var="col" value="#{rosterService.columnNames}">
-							<f:facet name="header">
-								<t:outputText value="#{col}"></t:outputText>
-							</f:facet>
-							<t:outputText value="#{row[col]}" />
-						</t:columns>
-					 -
-					 
-					 </t:dataTable>
-			</h:panelGrid>
-		</center>
-	
-
-	
-	<p><a title="Edit Roster" href="editRoster.jsp">Edit Roster</a></p>
-	
-	</h:form>	
+		<t:messages layout="list" showDetail="true" showSummary="false" style="color: #FF0000;"/>
+	</h:form>
 </f:view>
 </body>
 </html>

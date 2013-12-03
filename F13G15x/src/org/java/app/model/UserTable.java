@@ -3,10 +3,11 @@ package org.java.app.model;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name="userTable")
-@SessionScoped
+@RequestScoped
 public class UserTable {
 	
 	private String tableName;

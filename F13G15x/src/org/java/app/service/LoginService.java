@@ -3,6 +3,8 @@ package org.java.app.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.java.app.common.Constants;
 import org.java.app.common.Constants.SESSION_RESPONSE;
 import org.java.app.exceptions.DuplicateUserException;
+import org.java.app.exceptions.RestrictionException;
 import org.java.app.model.UserDataAccess;
 import org.java.app.model.UserLogin;
 import org.java.app.model.UserProfile;
@@ -34,7 +37,15 @@ public class LoginService {
 	
 	private int role;
 	
+	public LoginService(){
+		System.out.println("In Login Service");
+	}
+	
 	public HashMap<String, String> users = new HashMap<String, String>();
+	
+	public String tableSet(){
+		return "true";
+	}
 	
 	public String authenticate() {
 		
@@ -43,7 +54,13 @@ public class LoginService {
 		
 		userDBData.put(Constants.USER_DATA_COLUMNS.USERNAME, userLogin.getUserName());
 		userDBData.put(Constants.USER_DATA_COLUMNS.PASSWORD, userLogin.getPassword());
-			
+		
+		// Admin is independent of course
+		if(!userService.isAdmin(userLogin.getUserName())){
+			// Remove line below to restrict access for only one course
+			userDBData.put(Constants.USER_DATA_COLUMNS.COURSE, userData.getUserProfile().getCourse());
+		}
+		
 		if(userService.validateUser(userDBData)){
 			userService.setUserProfile(); // Once the user logs in explicitly set Profile
 			return Constants.SERVER_RESPONSE.SUCCESS;
@@ -52,11 +69,25 @@ public class LoginService {
 		
 	}
 		
-		
-	public String login() {
-		// Todo: Track user session and IP data
+	public boolean isAdmin() {
+		if(this.userData.getUserProfile().getUserRole().getRoleID() == 1){
+			return true;
+		}
+		return false;
+	}
 	
-		return null;
+	public boolean isProf() {
+		if(this.userData.getUserProfile().getUserRole().getRoleID() == 2){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isStudent() {
+		if(this.userData.getUserProfile().getUserRole().getRoleID() == 3){
+			return true;
+		}
+		return false;
 	}
 	
 	public String register() throws Exception{
@@ -67,7 +98,22 @@ public class LoginService {
 			userProfile.setUserRole(UserRole.STUDENT);
 		}else{
 			userProfile.setUserRole(UserRole.PROF);
+			boolean singleProfessor = userService.isOnlyProfessor(userData.getUserProfile().getCourse());
+			if(!singleProfessor){
+				getFacesMessage(FacesMessage.SEVERITY_ERROR, "A Professor is already assigned for this course. Please register for different course");
+				return Constants.SERVER_RESPONSE.ERROR;
+			}
+			
 		}
+		
+		try {
+			if(userService.getUserData().getUserLogin().getUserName().equalsIgnoreCase("ADMIN")){
+				throw new RestrictionException("UserName Restricted");
+			}} catch (RestrictionException e) {
+				getFacesMessage(FacesMessage.SEVERITY_ERROR, "UserName already taken. Please choose different name");
+				e.printStackTrace();
+				return Constants.SERVER_RESPONSE.ERROR;
+			}
 		
 		try {
 			
@@ -75,11 +121,11 @@ public class LoginService {
 			return Constants.SERVER_RESPONSE.SUCCESS;
 			
 		} catch (DuplicateUserException e) {
-			// TODO Auto-generated catch block
+			getFacesMessage(FacesMessage.SEVERITY_ERROR, "User already registered for this course. Please choose different user or course");
 			e.printStackTrace();
+			return Constants.SERVER_RESPONSE.ERROR;
+			
 		}
-		
-		return Constants.SERVER_RESPONSE.FAIL;
 		
 	}
 	
@@ -90,8 +136,12 @@ public class LoginService {
 
 			final HttpServletRequest req = (HttpServletRequest) ec.getRequest();
 			req.getSession(false).invalidate();
-			System.out.println(SESSION_RESPONSE.LOGOUT);
 			return SESSION_RESPONSE.LOGOUT;
+	}
+	
+	public void getFacesMessage(Severity severity, String message){
+		FacesContext fc = FacesContext.getCurrentInstance();
+		fc.addMessage(null, new FacesMessage(severity, message, null));
 	}
 
 	public HashMap<String, String> getUsers() {

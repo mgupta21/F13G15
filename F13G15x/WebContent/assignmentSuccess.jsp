@@ -4,32 +4,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<style>
+	body {
+		background-image: url(../images/bg.jpg);
+	}
+	</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link type="text/css" rel="stylesheet" href="../css/styles.css" />
-<style>
-body {
-	background-image: url(../images/bg.jpg);
-}
-</style>
-<title>Student Data Analysis</title>
+<title>Assignment Created</title>
 </head>
 <body>
 <f:view>
-	<f:loadBundle basename="messages" var="msg" />
-	
 	<f:verbatim>
 		<center>
-			<h3>Data Analysis</h3>
+			<h3>Success</h3>
+			<h5>Assignment is Successfully created and assigned to students</h5>
 		</center>
 		<br />
-		<center><a title="Home" href="home.jsp">Home</a></center>
+		<center><a title="home" href="home.jsp">Home</a></center>
 		<br/>
 		<hr />
 	</f:verbatim>
-	<h:form>
-		
-	</h:form>
-	
 </f:view>
 </body>
 </html>

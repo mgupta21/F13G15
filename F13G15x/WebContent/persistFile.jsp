@@ -29,40 +29,38 @@
 	<br/><br/>
 	<center>
 			<h:form>
-				<t:dataTable value="#{fileUpload.columns}" var="tableColumns">
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{msg['ColumnHeader']}"/>
-						</f:facet>
-						<h:outputText value="#{tableColumns.colName}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{msg['DefaultType']}"
-								style="font-size: 20px; font-weight: bold" />
-						</f:facet>
-						<h:outputText value="#{tableColumns.colDataType}"
-							style="font-size: 20px; font-weight: bold" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="#{msg['ChooseType']}"/>
-						</f:facet>
-						<h:selectOneMenu value="#{tableColumns.colDataType}">
-							<f:selectItems value="#{colDataTypes.dataTypes}"
-								var="defaultdatatype" itemValue="#{defaultdatatype}"
-								itemLabel="#{defaultdatatype.dataType}" />
-						</h:selectOneMenu>
-					</h:column>
-
-				</t:dataTable>
 				
-				<h:commandButton value="#{msg.create}" action="#{fileUpload.createTable}" />
+				<t:dataTable value="#{fileUpload.columns}" var="column" border="1" cellspacing="0" cellpadding="1" width="800">
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['ColumnHeader']}"/>
+							</f:facet>
+							<h:outputText value="#{column.colName}"/>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['DefaultType']}"/>
+							</f:facet>
+							<h:outputText value="#{column.colDataType}"/>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['ChooseType']}"/>
+							</f:facet>
+							<h:selectOneMenu value="#{column.colDataType}">
+								<f:selectItems value="#{colDataTypes.dataTypes}" var="dataType" itemValue="#{dataType}" itemLabel="#{dataType}" />
+							</h:selectOneMenu>
+						</h:column>
+
+					</t:dataTable>
+				
+				<br/>
+				<h:commandButton value="#{msg.create}" action="#{fileUploadService.uploadTable}" />
 				<h:commandButton value="#{msg.cancel}" action="home" />
-				
+				<t:messages layout="list" showDetail="true" showSummary="false" style="color: #FF0000;"/>
 			</h:form>
 
 	</center>

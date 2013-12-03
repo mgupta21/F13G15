@@ -36,10 +36,10 @@ public class UserService {
 		public UserDataAccess registerUser(UserDataAccess userData) throws Exception {
 		
 		this.userData = userData;
-		//this.dbService = new DatabaseServiceImpl(); // application scope
 		HashMap<String, Object> userDBData = new HashMap<String, Object>();
 		
 		userDBData.put(Constants.USER_DATA_COLUMNS.USERNAME, userData.getUserLogin().getUserName());
+		userDBData.put(Constants.USER_DATA_COLUMNS.COURSE, userData.getUserProfile().getCourse());
 		
 		if(!dbService.isExistingUser(userDBData)){
 			
@@ -49,29 +49,41 @@ public class UserService {
 			userDBData.put(Constants.USER_DATA_COLUMNS.FIRSTNAME, userData.getUserProfile().getFirstName());
 			userDBData.put(Constants.USER_DATA_COLUMNS.LASTNAME, userData.getUserProfile().getLastName());
 			userDBData.put(Constants.USER_DATA_COLUMNS.EMAILID, userData.getUserProfile().getEmail());
+			userDBData.put(Constants.USER_DATA_COLUMNS.COURSE, userData.getUserProfile().getCourse());
 			
 			dbService.createNewUser(userDBData);
 			
 		}else {
-			throw new DuplicateUserException("UserName already Taken. Please choose different user");
+			throw new DuplicateUserException("User already registered for this course. Please choose different user or course");
 		}
 		
 		return userData;
 	}
 	
 	public void setUserProfile() {
-		this.getUserData().setUserProfile(dbService.getUserProfile(userData.getUserLogin().getUserName()));
+		this.getUserData().setUserProfile(dbService.getUserProfile(userData));
 	}
 		
-	public List<UserTable> geTablesByUserName() {
-		String temp = "NA";
-		return dbService.getUserTables(userData.getUserLogin().getUserName(), temp);
+	public List<UserTable> getTablesByUserName() {
+		return dbService.getUserTables(userData.getUserLogin().getUserName(), null);
 	}	
 	
-	public List<UserTable> geTablesByType(String tableType) {
-		return dbService.getUserTables(userData.getUserLogin().getUserName(), tableType);
+	public List<UserTable> getUserAssignmentTables() {
+		return dbService.getUserTables(userData.getUserLogin().getUserName(), Constants.TABLE_TYPES.ASSIGNMENT_TABLE);
+	}
+	
+	public List<UserTable> getUserIndividualTables() {
+		return dbService.getUserTables(userData.getUserLogin().getUserName(), Constants.TABLE_TYPES.INDIVIDUAL);
 	}	
+	
+	public List<UserTable> getUserRosterTables() {
+		return dbService.getUserTables(userData.getUserLogin().getUserName(), Constants.TABLE_TYPES.ROOSTER);
+	}
 		
+	public List<String> getUserAssignments(){
+		return dbService.getActiveUserAssignments(userData);
+	}
+	
 	public List<Object> getUserTables(String userName) {
 		
 		return null;
@@ -91,6 +103,14 @@ public class UserService {
 
 	public void setDbService(DatabaseServiceImpl dbService) {
 		this.dbService = dbService;
+	}
+
+	public boolean isOnlyProfessor(String course) {
+		return dbService.isDuplicateProfessor(course);
+	}
+
+	public boolean isAdmin(String userName) {
+		return dbService.isRoleAdmin(userName);
 	}
 
 }
