@@ -15,6 +15,7 @@ public interface IDatabaseService {
 		public boolean isAutoincrement;
 		public boolean isNotNull;
 		public boolean isPrimaryKey;
+		public boolean isDefault;
 		
 	}
 

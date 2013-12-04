@@ -36,10 +36,12 @@
 								<h:selectOneRadio id="radio" value="#{fileUpload.tableType}" layout="pageDirection" required="true">
 									<f:selectItem itemValue="rsx" itemLabel="Roster" />
 								</h:selectOneRadio>
+								<t:message id="radioError" for="radio" style="color: #FF0000;" />
 							</h:panelGrid><br/>
 							
 							<h:outputLabel value="#{msg.chooseFile}" />
-								<t:inputFileUpload storage="default" value="#{fileUpload.uploadedFile}" required="true"></t:inputFileUpload>
+								<t:inputFileUpload id="fileSelect" storage="default" value="#{fileUpload.uploadedFile}" required="true"></t:inputFileUpload>
+								<t:message id="fileSelectError" for="fileSelect" style="color: #FF0000;" />
 							<br/><br/>
 							<%-- <h:commandButton value="#{msg.upload}" action="persistFile.jsp?faces-redirect=true" /> --%>
 							<h:commandButton value="#{msg.upload}" action="#{fileUploadService.redirectToPersist}" />

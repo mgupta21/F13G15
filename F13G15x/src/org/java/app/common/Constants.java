@@ -3,6 +3,7 @@ package org.java.app.common;
 public class Constants {
 	
 	public static class SERVER_RESPONSE {
+		public static final String VIEWROSTER = "ViewRoster";
 		public static String SUCCESS = "success";
 		public static String FAIL = "fail";
 		public static String LOGOUT = "logout";
@@ -76,10 +77,10 @@ public class Constants {
 	}
 	
 	public static class ROSTER_COLUMNS{
-		public static String LASTNAME = "Last Name";
-		public static String FIRSTNAME = "First Name";
+		public static String LASTNAME = "LastName";
+		public static String FIRSTNAME = "FirstName";
 		public static String USERNAME = "Username";
-		public static String UIN = "Student ID";
+		public static String UIN = "StudentID";
 		public static String GRADE = "Grade";
 		public static String TOTAL = "Total";
 		

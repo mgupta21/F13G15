@@ -10,25 +10,27 @@
 	}
 	</style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Error</title>
 </head>
 <body>
 <f:view>
 	<f:verbatim>
 		<center>
-			<h3>Error</h3>
-			<h5>Internal Error</h5>
+			<h3>System Error</h3>
+			<h5 style="color: #FF0000;">You have been Logged Out</h5>
+			<h5>Application is Temporarily Down. Please try after some time </h5>
 		</center>
 		<br />
-		<center><a title="Login" href="login.jsp">Login</a></center>
-		<br/>
+		<center><a title="Login" href="login.jsp">Login</a></center><br/>
 		<hr />
 	</f:verbatim>
-	<h:panelGrid>
-	    <h:outputText value="The follow error occured:" />
-	    <h:inputTextarea style="width: 100%;" rows="20" readonly="true" 
-	                                 value="#{Error.stackTrace}" />
-	</h:panelGrid>
+	<h:form>
+			<h:panelGrid>
+			    <h:outputText value="The following error has occured:" />
+			    <h:inputTextarea style="width: 300%;" rows="20" readonly="true" value="#{sysError.stackTrace}" />
+			</h:panelGrid>
+	</h:form>
+	
 	
 </f:view>
 </body>

@@ -36,6 +36,7 @@
 								<h:selectOneRadio id="iradio" value="#{fileUpload.tableType}" layout="pageDirection" required="true">
 									<f:selectItem itemValue="idx" itemLabel="Individual" />
 								</h:selectOneRadio>
+								<t:message id="iradioError" for="iradio" style="color: #FF0000;" />
 							</h:panelGrid><br/>
 							
 							<h:panelGrid columns="3" rendered="#{loginService.prof}">

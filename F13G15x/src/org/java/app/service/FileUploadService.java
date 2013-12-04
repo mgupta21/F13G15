@@ -20,6 +20,7 @@ import org.java.app.common.Constants;
 import org.java.app.exceptions.CorruptFileException;
 import org.java.app.exceptions.DuplicateTableException;
 import org.java.app.exceptions.InsertionException;
+import org.java.app.exceptions.NoInstructorException;
 import org.java.app.model.FileUpload;
 
 @ManagedBean(name="fileUploadService")
@@ -53,20 +54,25 @@ public class FileUploadService {
 		try {
 			fileUpload.uploadUserTable();
 
-			
+		}  catch (NoInstructorException e) {
+			String errorMsg = "Course ID: " + fileUpload.getFileUploadFactory().getUserService().getUserData().getUserProfile().getCourse() + " has no registered professor. Admin cannot upload roster for a course which doesn't have any Instructor assigned. First register an instructor for course and try again";
+			getFacesMessage(FacesMessage.SEVERITY_ERROR, errorMsg);
+			e.printStackTrace();
+			return Constants.SERVER_RESPONSE.ERROR;
 		} catch (DuplicateTableException e) {
-			getFacesMessage(FacesMessage.SEVERITY_ERROR, "Error While uploading table. Either duplicate table exist in database for this user or more than one table column had same name");
+			getFacesMessage(FacesMessage.SEVERITY_ERROR, "File upload failed due to one of these 1) Duplicate Table in database 2) File is Corrupt. Please upload a CSV in valid format");
 			e.printStackTrace();
 			return Constants.SERVER_RESPONSE.ERROR;
 		} catch (InsertionException e) {
-			getFacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Data in file. Please upload a CSV in valid format");
+			fileUpload.getFileUploadFactory().getDbService().dropTable(fileUpload.getFileUploadFactory().getDbTableName());
+			getFacesMessage(FacesMessage.SEVERITY_ERROR, "File Upload Unsuccessfull..!! Invalid Data in file. Please upload a CSV in valid format");
 			e.printStackTrace();
 			return Constants.SERVER_RESPONSE.ERROR;
 		} catch (IOException e) {
 			getFacesMessage(FacesMessage.SEVERITY_ERROR, "Error While uploading table. Either duplicate table exist in database for this user or more than one table column had same name");
 			e.printStackTrace();
 			return Constants.SERVER_RESPONSE.CORRUPT;
-		} 
+		}
 		
 		getUploadedTable();
 		

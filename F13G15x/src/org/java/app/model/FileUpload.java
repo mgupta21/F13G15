@@ -11,6 +11,7 @@ import org.apache.myfaces.custom.fileupload.UploadedFile;
 import org.java.app.exceptions.CorruptFileException;
 import org.java.app.exceptions.DuplicateTableException;
 import org.java.app.exceptions.InsertionException;
+import org.java.app.exceptions.NoInstructorException;
 import org.java.app.service.FileUploadFactory;
 
 @ManagedBean(name = "fileUpload")
@@ -25,7 +26,7 @@ public class FileUpload {
 	@ManagedProperty(value="#{fileUploadFactory}")
 	private FileUploadFactory fileUploadFactory;
 	
-	public void uploadUserTable() throws DuplicateTableException, IOException, InsertionException{
+	public void uploadUserTable() throws DuplicateTableException, IOException, InsertionException, NoInstructorException{
 			
 		fileUploadFactory.dataBaseUpload(tableName, tableType, columns, uploadedFile.getInputStream());
 		

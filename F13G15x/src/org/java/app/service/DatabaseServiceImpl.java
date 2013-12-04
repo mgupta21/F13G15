@@ -415,9 +415,9 @@ public class DatabaseServiceImpl implements IDatabaseService {
 		
 	}
 
-	public void uploadAssignment(Assignment assignment) {
+	public void uploadAssignment(Assignment assignment, String userName) {
 		
-		String dbTableName = assignment.getAssignmentName() + "_" + assignment.getAssignmentTable().getProfessorName() + "_" + assignment.getAssignmentTable().getCourse();
+		String dbTableName = assignment.getAssignmentName() + "_" + userName + "_" + assignment.getAssignmentTable().getCourse();
 		
 		try {
 			Statement st = conn.createStatement();
@@ -453,7 +453,8 @@ public class DatabaseServiceImpl implements IDatabaseService {
 
 	public void alotAssignmentToUser(Assignment assignment) {
 		List<String> users = new ArrayList<String>();
-		users = getAllStudents();
+		users = getAllStudentsByCourse(assignment.getAssignmentTable().getCourse());
+		
 		Statement st;
 		try {
 			st = conn.createStatement();
@@ -474,6 +475,136 @@ public class DatabaseServiceImpl implements IDatabaseService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public void alotAssignmentToAdmin(Assignment assignment, String userName) {
+		Statement st;
+		try {
+			st = conn.createStatement();
+			
+			StringBuffer insertQuery = new StringBuffer();
+				insertQuery.append("INSERT INTO `" + Constants.USER_DB_TABLES.STUDENT_ASSIGNMENT_TABLE_MAPPER + "` (`" + Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.USERNAME
+						+ "`, `" + Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.ASSIGNMENT_NAME + "`, `" + Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.COURSE +  "`, `" + Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.IS_ACTIVE
+						+ "`, `" + Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.SCORE + "`) VALUES ('");
+				insertQuery.append(userName).append("', '")
+				.append(assignment.getAssignmentTable().getAssignmentName()).append("', '")
+				.append(assignment.getAssignmentTable().getCourse()).append("', '")
+				.append(1).append("', '").append(0).append("');");
+				st.executeUpdate(insertQuery.toString());
+				/*insertQuery.replace(0, insertQuery.length(), "");*/
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+public boolean isUserExistInRoster(String rosterTableName, String userName) {
+		
+		ResultSet rs = null;
+		String UserName = null;
+		Statement st;
+		try {
+			st = conn.createStatement(); 
+			
+			StringBuffer query = new StringBuffer();
+			query.append("SELECT `").append(Constants.ROSTER_COLUMNS.USERNAME).append("` FROM `")
+			.append(rosterTableName).append("` WHERE `").append(Constants.ROSTER_COLUMNS.USERNAME)
+			.append("`='").append(userName).append("';");
+			
+		  rs = st.executeQuery(query.toString());
+		    while (rs.next()) {
+		    	UserName = rs.getString(Constants.ROSTER_COLUMNS.USERNAME);
+		    }
+		    
+		    if (UserName==null){
+		    	return false;
+		    }else{
+		    	return true;
+		    }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return true;
+		
+	}
+	
+	// Add all course students in roster before professor see's the course roster
+	public void addAllStudentsInRoster(String rosterTableName, String course) {
+		
+		List<String> users = new ArrayList<String>();
+		users = getAllStudentsByCourse(course);
+		
+		Statement st;
+		try {
+			for (String user: users){
+				st = conn.createStatement();
+				if(!isUserExistInRoster(rosterTableName, user)){
+					HashMap<String, String> userData = new HashMap<String, String>();
+					userData = getStudentDataForRoster(user, course);
+					
+					StringBuffer insertQuery = new StringBuffer();
+					insertQuery.append("INSERT INTO `").append(rosterTableName).append("` (`").append(Constants.ROSTER_COLUMNS.USERNAME)
+					.append("`, `").append(Constants.ROSTER_COLUMNS.LASTNAME).append("`, `").append(Constants.ROSTER_COLUMNS.FIRSTNAME)
+					.append("`, `").append(Constants.ROSTER_COLUMNS.UIN).append("`) VALUES ('").append(userData.get(Constants.ROSTER_COLUMNS.USERNAME)).append("', '")
+					.append(userData.get(Constants.ROSTER_COLUMNS.LASTNAME)).append("', '").append(userData.get(Constants.ROSTER_COLUMNS.FIRSTNAME))
+					.append("', '").append(userData.get(Constants.ROSTER_COLUMNS.UIN)).append("');");
+					
+					st.executeUpdate(insertQuery.toString());
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public HashMap<String,String> getStudentDataForRoster(String userName, String course){
+		ResultSet rs = null;
+		HashMap<String, String> userData = new HashMap<String, String>();
+		
+		try {
+			StringBuffer query = new StringBuffer();
+			Statement stmt = conn.createStatement();
+			
+			query.append("select * from ").append(Constants.USER_DB_TABLES.USER_DATA).append(" where `")
+			.append(Constants.USER_DATA_COLUMNS.USERNAME).append("`='").append(userName).append("'")
+			.append(" and `").append(Constants.USER_DATA_COLUMNS.COURSE).append("`='").append(course).append("';");
+			
+			rs = stmt.executeQuery(query.toString());
+		
+		while (rs.next()) {
+			
+			userData.put(Constants.ROSTER_COLUMNS.USERNAME, userName);
+			userData.put(Constants.ROSTER_COLUMNS.LASTNAME, rs.getString(Constants.USER_DATA_COLUMNS.LASTNAME));
+			userData.put(Constants.ROSTER_COLUMNS.FIRSTNAME, rs.getString(Constants.USER_DATA_COLUMNS.FIRSTNAME));
+			userData.put(Constants.ROSTER_COLUMNS.UIN, rs.getString(Constants.USER_DATA_COLUMNS.UIN));
+			
+		}
+		
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return userData;
 		
 	}
 	
@@ -498,7 +629,7 @@ public class DatabaseServiceImpl implements IDatabaseService {
 	}
 
 	// Assigns each assignment name to its source Table
-		public void tableAssignmentMap(Assignment assignment) {
+		public void tableAssignmentMap(Assignment assignment, String userName) {
 			
 			Statement st;
 			try {
@@ -508,7 +639,7 @@ public class DatabaseServiceImpl implements IDatabaseService {
 					insertQuery.append("INSERT INTO `" + Constants.USER_DB_TABLES.SOURCE_TABLE_AND_ASSIGNMENT_MAPPER + "` (`" + Constants.SOURCE_TABLE_AND_ASSIGNMENT_COLUMNS.ASSIGNMENT_NAME
 							+ "`, `" + Constants.SOURCE_TABLE_AND_ASSIGNMENT_COLUMNS.PROFESSOR_NAME + "`, `" + Constants.SOURCE_TABLE_AND_ASSIGNMENT_COLUMNS.COURSE +  "`, `" +  Constants.SOURCE_TABLE_AND_ASSIGNMENT_COLUMNS.SOURCE_TABLENAME + "`) VALUES ('");
 					insertQuery.append(assignment.getAssignmentTable().getAssignmentName()).append("', '")
-					.append(assignment.getAssignmentTable().getProfessorName()).append("', '")
+					.append(userName).append("', '")
 					.append(assignment.getAssignmentTable().getCourse()).append("', '")
 					.append(assignment.getAssignmentTable().getSourceTableName()).append("');");
 					st.executeUpdate(insertQuery.toString());
@@ -519,6 +650,7 @@ public class DatabaseServiceImpl implements IDatabaseService {
 			
 		}
 	
+		// Get Active Assignments for Course logged in for
 	public List<String> getActiveUserAssignments(UserDataAccess userData){
 		
 		ResultSet rs = null;
@@ -528,19 +660,19 @@ public class DatabaseServiceImpl implements IDatabaseService {
 			st = conn.createStatement(); 
 			
 		StringBuffer query = new StringBuffer();
-		query.append("Select ").append(Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.ASSIGNMENT_NAME)
-		.append(" from ").append(Constants.USER_DB_TABLES.STUDENT_ASSIGNMENT_TABLE_MAPPER)
-		.append(" where ").append(Constants.USER_DATA_COLUMNS.USERNAME).append(" = '").append(userData.getUserLogin().getUserName())
-		.append("' and ").append(Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.IS_ACTIVE).append(" = ").append(true)
-		.append(";");
-		
-		
 		/*query.append("Select ").append(Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.ASSIGNMENT_NAME)
 		.append(" from ").append(Constants.USER_DB_TABLES.STUDENT_ASSIGNMENT_TABLE_MAPPER)
 		.append(" where ").append(Constants.USER_DATA_COLUMNS.USERNAME).append(" = '").append(userData.getUserLogin().getUserName())
-		.append("', ").append(Constants.USER_DATA_COLUMNS.COURSE).append(" = '").append(userData.getUserProfile().getCourse())
 		.append("' and ").append(Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.IS_ACTIVE).append(" = ").append(true)
 		.append(";");*/
+		
+		
+		query.append("SELECT ").append(Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.ASSIGNMENT_NAME)
+		.append(" FROM `").append(Constants.USER_DB_TABLES.STUDENT_ASSIGNMENT_TABLE_MAPPER)
+		.append("` WHERE `").append(Constants.USER_DATA_COLUMNS.USERNAME).append("` = '").append(userData.getUserLogin().getUserName())
+		.append("' AND `").append(Constants.USER_DATA_COLUMNS.COURSE).append("` = '").append(userData.getUserProfile().getCourse())
+		.append("' AND `").append(Constants.STUDENT_ASSIGNMENT_TABLE_COLUMNS.IS_ACTIVE).append("` = ").append(true)
+		.append(";");
 			
 			
 		  rs = st.executeQuery(query.toString());
@@ -598,7 +730,7 @@ public class DatabaseServiceImpl implements IDatabaseService {
 	}
 	
 	
-	public List<String> getAllStudents(){
+	public List<String> getAllStudentsByCourse(String course){
 		
 		ResultSet rs = null;
 		List<String> users = new ArrayList<String>();
@@ -607,9 +739,10 @@ public class DatabaseServiceImpl implements IDatabaseService {
 			Statement stmt = conn.createStatement();
 
 			StringBuffer query = new StringBuffer();
-			query.append("Select ").append(Constants.USER_DATA_COLUMNS.USERNAME).append(" from ")
-			.append(Constants.USER_DB_TABLES.USER_DATA).append(" where ").append(Constants.USER_DATA_COLUMNS.USER_ROLE)
-			.append(" = ").append(UserRole.STUDENT.getRoleID()).append(";");
+			query.append("SELECT ").append(Constants.USER_DATA_COLUMNS.USERNAME).append(" FROM ")
+			.append(Constants.USER_DB_TABLES.USER_DATA).append(" WHERE `").append(Constants.USER_DATA_COLUMNS.USER_ROLE)
+			.append("` = ").append(UserRole.STUDENT.getRoleID()).append(" AND `").append(Constants.USER_DATA_COLUMNS.COURSE)
+			.append("`='").append(course).append("';");
 
 		    rs = stmt.executeQuery(query.toString());
 		    while (rs.next()) {
@@ -728,6 +861,56 @@ public class DatabaseServiceImpl implements IDatabaseService {
 		return false;
 	}
 	
+	// Check if roster for a course exist in the database
+		public boolean isRosterUploaded(String course){
+			
+			String professorName = getProfessorName(course);
+			 if(professorName==""){
+				 return false;
+			 }else{
+				 return true;
+			 }
+			 /*String tableName = getRosterTableName(course);
+			
+				ResultSet rs = null;
+				
+				try { 
+
+					Statement stmt = conn.createStatement();
+			 
+					StringBuffer qry = new StringBuffer();
+					
+					qry.append("SELECT * FROM INFORMATION_SCHEMA.COLUMNS where TABLE_NAME=")
+					.append("'" + tableName + "'");
+					
+					rs = stmt.executeQuery(qry.toString());
+					
+					if(rs.next()) {
+						return true;
+					}else{
+						return false;
+					}
+			 
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}finally{
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				return false;*/
+		}
+		
+	// Roster table name for the course
+		public String getRosterTableName(String course){
+			String tableName="";
+			String professorName = getProfessorName(course);
+			tableName = professorName + "_" + course;
+			return tableName;
+		}
+	
 	// get professor name for by course, Roster Table Name = ProfessorName_Course
 	public String getProfessorName(String course) {
 		
@@ -753,6 +936,58 @@ public class DatabaseServiceImpl implements IDatabaseService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
+		}
+		
+	}
+	
+	// get professor name for by course, Roster Table Name = ProfessorName_Course
+		public String getProfessorFromUserData(String course) {
+			
+			ResultSet rs = null;
+			String UserName = "";
+			
+			try { 
+
+				Statement stmt = conn.createStatement();
+
+				StringBuffer query = new StringBuffer();
+				query.append("SELECT `").append(Constants.USER_DATA_COLUMNS.USERNAME).append("` FROM `").append(Constants.USER_DB_TABLES.USER_DATA)
+				.append("` WHERE `").append(Constants.USER_DATA_COLUMNS.COURSE).append("` = '").append(course).append("' AND `")
+				.append(Constants.USER_DATA_COLUMNS.USER_ROLE).append("`=").append(UserRole.PROF.getRoleID()).append(";");
+
+			    rs = stmt.executeQuery(query.toString());
+			    
+			    while (rs.next()) {
+			    	UserName= rs.getString(Constants.USER_DATA_COLUMNS.USERNAME);
+			    }
+
+			return UserName;	
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+			
+		}
+	
+	// Add User to Roster
+	public void addUserToRoster(String rosterTableName, UserDataAccess userData) {
+		
+		Statement st;
+		try {
+			st = conn.createStatement();
+			
+			StringBuffer insertQuery = new StringBuffer();
+			insertQuery.append("INSERT INTO `").append(rosterTableName).append("` (`").append(Constants.ROSTER_COLUMNS.USERNAME)
+			.append("`, `").append(Constants.ROSTER_COLUMNS.LASTNAME).append("`, `").append(Constants.ROSTER_COLUMNS.FIRSTNAME)
+			.append("`, `").append(Constants.ROSTER_COLUMNS.UIN).append("`) VALUES ('").append(userData.getUserLogin().getUserName()).append("', '")
+			.append(userData.getUserProfile().getLastName()).append("', '").append(userData.getUserProfile().getFirstName())
+			.append("', '").append(userData.getUserProfile().getUIN()).append("');");
+			
+			st.executeUpdate(insertQuery.toString());
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		
 	}
@@ -820,6 +1055,9 @@ public class DatabaseServiceImpl implements IDatabaseService {
 				if(colMeta.isNotNull){
 					query.append(" NOT NULL ");
 				}
+				if(colMeta.isDefault){
+					query.append(" DEFAULT 0 ");
+				}
 				if(colMeta.isPrimaryKey){
 					query.append(" PRIMARY KEY ");
 				}
@@ -842,6 +1080,21 @@ public class DatabaseServiceImpl implements IDatabaseService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new InsertionException("Invalid Data in file. Please upload a CSV in valid format");
+		}
+		
+	}
+	
+	public void dropTable(String tableName){
+		StringBuffer query = new StringBuffer();
+		query.append("DROP TABLE ").append(tableName).append(";");
+		
+		try {
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(query.toString());
+			System.out.println("Table: " + tableName + " deleted due to unsuccessful upload");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
@@ -931,9 +1184,7 @@ public class DatabaseServiceImpl implements IDatabaseService {
 		return false;
 	}
 
-
-
-
+	
 
 
 }

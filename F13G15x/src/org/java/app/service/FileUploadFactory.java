@@ -14,6 +14,7 @@ import javax.faces.bean.SessionScoped;
 import org.java.app.common.Constants;
 import org.java.app.exceptions.DuplicateTableException;
 import org.java.app.exceptions.InsertionException;
+import org.java.app.exceptions.NoInstructorException;
 
 import org.java.app.interfaces.IDatabaseService;
 import org.java.app.interfaces.IDatabaseService.TableColumnMeta;
@@ -35,7 +36,7 @@ public class FileUploadFactory {
 		@ManagedProperty(value = "#{userService}")
 		private UserService userService;
 		
-		public void dataBaseUpload(String tableName, String tableType, TableColumn[] columns, InputStream dataStream) throws DuplicateTableException, InsertionException {
+		public void dataBaseUpload(String tableName, String tableType, TableColumn[] columns, InputStream dataStream) throws DuplicateTableException, InsertionException, NoInstructorException {
 			
 			// Creates DB Table 
 			uploadDBTable(tableName, tableType, columns);
@@ -47,7 +48,7 @@ public class FileUploadFactory {
 			updateUserTableMap(tableName, tableType);
 		}
 
-		private void uploadDBTable(String tableName, String tableType, TableColumn[] columns) throws DuplicateTableException {
+		private void uploadDBTable(String tableName, String tableType, TableColumn[] columns) throws DuplicateTableException, NoInstructorException {
 
 			this.dbTableName = createTableName(tableName, tableType);
 			
@@ -67,9 +68,13 @@ public class FileUploadFactory {
 				colMeta.colDataType = column.getColDataType().getDBDataType();
 				colMeta.isAutoincrement = false;
 				colMeta.isNotNull = false;
+				colMeta.isDefault = false;
 				if(tableType.equalsIgnoreCase(Constants.TABLE_TYPES.ROOSTER)){
 					if(column.getColName().equalsIgnoreCase(Constants.USER_TABLE_COLUMNS.USERNAME)){
 						colMeta.isPrimaryKey = true;
+					}// For Roster all Int should be 0 for analysis
+					if(column.getColDataType().getDBDataType().equalsIgnoreCase("int")){
+						colMeta.isDefault = true;
 					}
 				}else{
 					colMeta.isPrimaryKey = false;
@@ -81,9 +86,17 @@ public class FileUploadFactory {
 			dbService.createDBTable(dbTableName, colMetaList);
 		}
 		
-		public String createTableName(String tableName, String tableType){
+		public String createTableName(String tableName, String tableType) throws NoInstructorException{
 			
 			if(tableType.equalsIgnoreCase(Constants.TABLE_TYPES.ROOSTER)){
+				if(userService.isAdmin(userService.getUserData().getUserLogin().getUserName())){
+					String professorName = dbService.getProfessorFromUserData(userService.getUserData().getUserProfile().getCourse());
+					if(professorName=="" || professorName==null){
+						throw new NoInstructorException("Admin cannot upload roster for a course which doesn't have any Instructor assigned. First register an instructor for course and try again");
+					}else{
+						return professorName  + "_" + userService.getUserData().getUserProfile().getCourse();
+					}
+				}
 				return userService.getUserData().getUserLogin().getUserName() + "_" + userService.getUserData().getUserProfile().getCourse();
 			}
 			return userService.getUserData().getUserLogin().getUserName() + "_" + tableName + "_"  + tableType;
@@ -96,6 +109,7 @@ public class FileUploadFactory {
 			tColMeta.colDataType = ColumnDataType.Integer.getDBDataType();
 			tColMeta.isAutoincrement = true;
 			tColMeta.isNotNull = false;
+			tColMeta.isDefault = false;
 			tColMeta.isPrimaryKey = true;
 			
 			return tColMeta;
@@ -189,7 +203,13 @@ public class FileUploadFactory {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			
 			if(tableType.equalsIgnoreCase(Constants.TABLE_TYPES.ROOSTER)){
-				map.put(Constants.PROFESSOR_ROSTER_COLUMNS.PROFESSORNAME, userService.getUserData().getUserLogin().getUserName());
+				// Admin uploads the roster for professor and not for himself
+				if(userService.isAdmin(userService.getUserData().getUserLogin().getUserName())){
+					String professorName = dbService.getProfessorFromUserData(userService.getUserData().getUserProfile().getCourse());
+					map.put(Constants.PROFESSOR_ROSTER_COLUMNS.PROFESSORNAME, professorName);
+				}else{
+					map.put(Constants.PROFESSOR_ROSTER_COLUMNS.PROFESSORNAME, userService.getUserData().getUserLogin().getUserName());
+				}
 				map.put(Constants.PROFESSOR_ROSTER_COLUMNS.COURSE, userService.getUserData().getUserProfile().getCourse());
 				dbService.updateTableMapper(Constants.USER_DB_TABLES.PROFESSOR_ROSTER_MAP, map);
 			}else{

@@ -16,11 +16,13 @@ import javax.servlet.jsp.jstl.sql.Result;
 import javax.servlet.jsp.jstl.sql.ResultSupport;
 
 import org.java.app.common.Constants;
+import org.java.app.exceptions.NoInstructorException;
 import org.java.app.model.Assignment;
 import org.java.app.model.AssignmentSolved;
 import org.java.app.model.AssignmentTable;
 import org.java.app.model.Question;
 import org.java.app.model.TableColumn;
+import org.java.app.model.UserRole;
 
 @ManagedBean(name="assignmentService")
 @SessionScoped
@@ -117,21 +119,45 @@ public class AssignmentService {
 	
 	public String createAssignmentTable(){
 		
-		dbService.uploadAssignment(assignment);
-		alotAssignment();
-		mapAssignmentWithTable();
+		if(userService.getUserData().getUserProfile().getUserRole().getRoleID()==UserRole.ADMIN.getRoleID()){
+			String proffessorName = dbService.getProfessorFromUserData(userService.getUserData().getUserProfile().getCourse());
+			if(proffessorName!=""){
+				dbService.uploadAssignment(assignment, proffessorName);
+				// Alot assignment to both Admin and students
+				alotAssignmentToStudents();
+				alotAssignmentToAdmin(userService.getUserData().getUserLogin().getUserName());
+				mapAssignmentWithTable(proffessorName);
+			}else{
+				try {
+					throw new NoInstructorException("NO Instructor Found");
+				} catch (NoInstructorException e) {
+					getFacesMessage(FacesMessage.SEVERITY_ERROR, "Assignment Creation Failed..!! Admin create's assignment on behaf of an Instructor. But there is no registered instructor for this course ");
+					e.printStackTrace();
+					return Constants.SERVER_RESPONSE.ERROR;
+				}
+			}
+		}else{
+			dbService.uploadAssignment(assignment, assignment.getAssignmentTable().getProfessorName());
+			// Professor Assigns to students only
+			alotAssignmentToStudents();
+			mapAssignmentWithTable(assignment.getAssignmentTable().getProfessorName());
+		}
 		this.renderSet = false;
 		this.assignment = new Assignment(); // Reset the assignment
 		return "AssignmentCreated";
 		
 	}
 	
-	private void mapAssignmentWithTable() {
-		dbService.tableAssignmentMap(assignment);
+	private void mapAssignmentWithTable(String userName) {
+		dbService.tableAssignmentMap(assignment, userName);
 	}
 
-	public void alotAssignment(){
+	public void alotAssignmentToStudents(){
 		dbService.alotAssignmentToUser(assignment);
+	}
+	
+	public void alotAssignmentToAdmin(String userName){
+		dbService.alotAssignmentToAdmin(assignment, userName);
 	}
 	
 	public String takeExamination(){
@@ -189,9 +215,13 @@ public class AssignmentService {
 	public String submitExam(){
 		int examScore = assignmentSolved.verifySolution();
 		dbService.updateStudentAssignment(userService.getUserData().getUserLogin().getUserName(), this.examSelected, examScore);
-		rosterService.getRosterManager().setExamSelected(examSelected);
-		rosterService.getRosterManager().setScore(examScore);
-		rosterService.updateRoster();
+		
+		// Admin's score should not be updated in roster
+		if(userService.getUserData().getUserProfile().getUserRole().getRoleID()!=UserRole.ADMIN.getRoleID()){
+			rosterService.getRosterManager().setExamSelected(examSelected);
+			rosterService.getRosterManager().setScore(examScore);
+			rosterService.updateRoster();
+		}
 		return "ExamSubmitted";
 	}
 	
@@ -199,42 +229,7 @@ public class AssignmentService {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		fc.addMessage(null, new FacesMessage(severity, message, null));
 	}
-	
-/*	public String getRoster(){
-		
-		System.out.println("In Get Roster");
-		
-		String rosterTableName = rosterTable.getProfessorName() + "_" + rosterTable.getCourse();
-		ResultSet rs = dbService.getSourceTable(rosterTableName);
-		try {
-			ResultSetMetaData rsmd = rs.getMetaData();
-			result = ResultSupport.toResult(rs);
-			int numberColumns = rsmd.getColumnCount();
-			int numberRows = result.getRowCount();
-			String columnNameList [] = result.getColumnNames();
-			columnNames = new ArrayList<String>();
-			for(int i=0; i<numberColumns;i++){
-				columnNames.add(columnNameList[i]);
-			}
-			
-			setRosterTable();
-		
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		
-		return "ViewRoster";
-		
-	}
-	
-	// Professor name should be set from DB to make it work in case of Admin login as well
-	public void setRosterTable(){
-		String UserName = dbService.getProfessorName(userService.getUserData().getUserProfile().getCourse());
-		rosterTable.setProfessorName(UserName);
-		rosterTable.setCourse(userService.getUserData().getUserProfile().getCourse());
-	}*/
-	
+
 	public boolean isRenderSet() {
 		return renderSet;
 	}

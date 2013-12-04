@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.java.app.common.Constants;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -34,46 +35,78 @@ public class RosterService {
 	Result result;
 	private List<String> columnNames;
 	
-	public void getRroster(){
+	private boolean renderRoster = false;
+	
+	/*public RosterService(UserService uServ){
+		this.userService = uServ;
+		this.dbService = uServ.getDbService();
+		getRroster();
+		if(dbService.isRosterUploaded(userService.getUserData().getUserProfile().getCourse())){
+			renderRoster = true;
+		}else{
+			renderRoster = false;
+		}
+	}*/
+	
+	public String viewRoster(){
 		
-		System.out.println("In Get Roster");
+		return Constants.SERVER_RESPONSE.VIEWROSTER;
+	}
+	
+	public boolean getRoster(){
+		
 		setRosterTable();
 		
-		String rosterTableName = rosterTable.getProfessorName() + "_" + rosterTable.getCourse();
-		ResultSet rs = dbService.getSourceTable(rosterTableName);
-		try {
-			ResultSetMetaData rsmd = rs.getMetaData();
-			result = ResultSupport.toResult(rs);
-			int numberColumns = rsmd.getColumnCount();
-			int numberRows = result.getRowCount();
-			String columnNameList [] = result.getColumnNames();
-			columnNames = new ArrayList<String>();
-			for(int i=0; i<numberColumns;i++){
-				columnNames.add(columnNameList[i]);
-			}
-			
-			
+		renderRoster = dbService.isRosterUploaded(rosterTable.getCourse());
+		 if(renderRoster){
+			 String rosterTableName = rosterTable.getProfessorName() + "_" + rosterTable.getCourse();
+				showAllStudentsInRoster(rosterTableName);
+				
+				ResultSet rs = dbService.getSourceTable(rosterTableName);
+				try {
+						ResultSetMetaData rsmd = rs.getMetaData();
+						result = ResultSupport.toResult(rs);
+						int numberColumns = rsmd.getColumnCount();
+						int numberRows = result.getRowCount();
+						String columnNameList [] = result.getColumnNames();
+						columnNames = new ArrayList<String>();
+						for(int i=0; i<numberColumns;i++){
+							columnNames.add(columnNameList[i]);
+						}
+					
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				}
+		 }
 		
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		
-		/*return "ViewRoster";*/
-		
+		return renderRoster;
+	}
+	
+	public void showAllStudentsInRoster(String rosterTableName){
+		dbService.addAllStudentsInRoster(rosterTableName, userService.getUserData().getUserProfile().getCourse());
 	}
 	
 	public void updateRoster(){
 		String examSelected = rosterManager.getExamSelected();
 		int Score = rosterManager.getScore();
 		setRosterTable();
-		dbService.UpdateScore(examSelected, Score, rosterTable, userService.getUserData().getUserLogin().getUserName());
+		// If roster exist then add user to roster and update user score in roster
+		if(dbService.isRosterUploaded(userService.getUserData().getUserProfile().getCourse())){
+			if(!dbService.isUserExistInRoster(dbService.getRosterTableName(userService.getUserData().getUserProfile().getCourse()), userService.getUserData().getUserLogin().getUserName())){
+				dbService.addUserToRoster(dbService.getRosterTableName(userService.getUserData().getUserProfile().getCourse()), userService.getUserData());
+			}
+			dbService.UpdateScore(examSelected, Score, rosterTable, userService.getUserData().getUserLogin().getUserName());
+		}else{
+			System.out.println("Student score was not updated in roster. No roster found for the course");
+		}
 	}
 	
 	// Professor name should be set from DB to make it work in case of Admin login as well
 	public void setRosterTable(){
 		String tableName = userService.getUserData().getUserProfile().getCourse();
 		String UserName = dbService.getProfessorName(tableName);
+		rosterTable = new RosterTable(); 
 		rosterTable.setProfessorName(UserName);
 		rosterTable.setCourse(userService.getUserData().getUserProfile().getCourse());
 	}
@@ -90,7 +123,7 @@ public class RosterService {
 
 
 	public Result getResult() {
-		getRroster();
+		//getRoster();
 		return result;
 	}
 
@@ -134,5 +167,16 @@ public class RosterService {
 	public void setRosterManager(RosterManager rosterManager) {
 		this.rosterManager = rosterManager;
 	}
+
+	public void setRenderRoster(boolean renderRoster) {
+		this.renderRoster = renderRoster;
+	}
+
+	public boolean isRenderRoster() {
+		return renderRoster;
+	}
+	
+	
+	
 
 }

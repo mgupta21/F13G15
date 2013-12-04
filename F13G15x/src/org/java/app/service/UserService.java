@@ -11,6 +11,7 @@ import org.apache.myfaces.custom.date.AbstractHtmlInputDate.UserData;
 import org.java.app.common.Constants;
 import org.java.app.exceptions.DuplicateUserException;
 import org.java.app.model.UserDataAccess;
+import org.java.app.model.UserRole;
 import org.java.app.model.UserTable;
 
 @ManagedBean(name = "userService")
@@ -52,6 +53,13 @@ public class UserService {
 			userDBData.put(Constants.USER_DATA_COLUMNS.COURSE, userData.getUserProfile().getCourse());
 			
 			dbService.createNewUser(userDBData);
+			
+			if(userData.getUserProfile().getUserRole().getRoleID()==UserRole.STUDENT.getRoleID()){
+				if(dbService.isRosterUploaded(userData.getUserProfile().getCourse())){
+					dbService.addUserToRoster(dbService.getRosterTableName(userData.getUserProfile().getCourse()), userData);				
+				}
+				
+			}
 			
 		}else {
 			throw new DuplicateUserException("User already registered for this course. Please choose different user or course");

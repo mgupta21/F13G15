@@ -32,13 +32,14 @@
 						<h:panelGrid rendered="#{loginService.student}">
 							<a title="Uplaod Data" href="uploadFile.jsp">Upload Data Sheet</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Data Analysis" href="analysis.jsp">Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-							<a title="View Report" href="studentAssignment.jsp">Student Assignment</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<a title="Student Assignment" href="studentAssignment.jsp">Student Assignment</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Download Data" href="download.jsp">Download Data</a>
 						</h:panelGrid>
 						<h:panelGrid rendered="#{loginService.prof}">
 							<a title="Uplaod Data" href="uploadFile.jsp">Upload Data Sheet</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Uplaod Roster" href="uploadRoster.jsp">Upload Roster</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Download Data" href="download.jsp">Download Data</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							<%-- <h:commandLink value="View Rooster" action="#{rosterService.viewRoster}" />&nbsp;&nbsp;|&nbsp;&nbsp; --%>
 							<a title="View Rooster" href="roster.jsp">View Roster</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Rooster Data Analysis" href="rosterAnalysis.jsp">Roster Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Edit Document" href="edit.jsp">Edit Document</a>&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -47,10 +48,12 @@
 						<h:panelGrid rendered="#{loginService.admin}">
 							<a title="Uplaod Data" href="uploadFile.jsp">Upload Data Sheet</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Uplaod Roster" href="uploadRoster.jsp">Upload Roster</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+							
 							<a title="Download Data" href="download.jsp">Download Data</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Data Analysis" href="analysis.jsp">Data Analysis</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Edit Document" href="edit.jsp">Edit Document</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<!-- <a title="View Report" href="studentAssignment.jsp">Student Assignment</a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+							<a title="Student Assignment" href="studentAssignment.jsp">Take Assignment</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Create Assignment" href="createAssignment.jsp">Create Assignment</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="View Rooster" href="roster.jsp">View Roster</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 							<a title="Rooster Data Analysis" href="rosterAnalysis.jsp">Roster Data Analysis</a>

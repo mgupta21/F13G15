@@ -63,6 +63,10 @@ public class LoginService {
 		
 		if(userService.validateUser(userDBData)){
 			userService.setUserProfile(); // Once the user logs in explicitly set Profile
+			
+			/*// Initiate RosterService for professor
+			RosterService rosterService = new RosterService();*/
+			
 			return Constants.SERVER_RESPONSE.SUCCESS;
 		}
 		return Constants.SERVER_RESPONSE.FAIL;

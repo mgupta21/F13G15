@@ -40,16 +40,18 @@
 				</center>
 				
 				<center>
-					<h3>Admin Cheat Sheet</h3>
-					<h:panelGrid columns="2" >
-							<t:dataTable value="#{assignmentService.resultE}" var="row" border="1" cellspacing="0" cellpadding="1" width="800">
-								<t:columns var="col" value="#{assignmentService.columnNamesE}">
-									<f:facet name="header">
-										<t:outputText value="#{col}"></t:outputText>
-									</f:facet>
-									<t:outputText value="#{row[col]}" />
-								</t:columns>
-							</t:dataTable>
+					<h:panelGrid rendered="#{loginService.admin}">
+						<h3>Admin Cheat Sheet</h3>
+						<h:panelGrid columns="2" >
+								<t:dataTable value="#{assignmentService.resultE}" var="row" border="1" cellspacing="0" cellpadding="1" width="800">
+									<t:columns var="col" value="#{assignmentService.columnNamesE}">
+										<f:facet name="header">
+											<t:outputText value="#{col}"></t:outputText>
+										</f:facet>
+										<t:outputText value="#{row[col]}" />
+									</t:columns>
+								</t:dataTable>
+						</h:panelGrid>
 					</h:panelGrid>
 				</center>
 				
